@@ -1,73 +1,82 @@
 from representatie import Station
 
-def load_coords():
-    connecties = "../data/StationsHolland.csv"
-    station_list = []
+class Network():
+    def __init__(self, source_file, source_file_neighbours):
+        self.stations: Dict[str, "Station"] = self.load_stations(source_file)
+        self.load_conns(source_file_neighbours)
 
-    # open the ConnectiesHolland file
-    with open(connecties) as f:
-        # skip first line
-        next(f)
+    # make nodes for every station with coordinates
+    def load_stations(self, source_file):
 
-        # read every line in the file until EOF
-        while True:
-            line = f.readline()
-            if not line:
-                break
+        # initiate dict to fill with station nodes
+        station_dict = {}
 
-            # split the lines into the two stations and the time it takes between them
-            splitline = line.split(",")
+        # open the ConnectiesHolland file
+        with open(source_file, 'r') as f:
+            # skip first line
+            next(f)
 
-            splitline[-1] = splitline[-1].strip()
+            # read every line in the file until EOF
+            while True:
+                line = f.readline()
+                if not line:
+                    break
 
-            station = splitline[0]
-            y = float(splitline[1])
-            x = float(splitline[2])
+                # split the lines into the two stations and the time it takes between them
+                splitline = line.split(",")
+                splitline[-1] = splitline[-1].strip()
 
-            new_station = Station(station)
-            new_station.add_coord(x, y)
-            station_list.append(new_station)
+                # select needed information, name and coordinates of the station
+                station = splitline[0]
+                y = float(splitline[1])
+                x = float(splitline[2])
 
-    return station_list
+                # create station node and add to dictionary
+                station_dict[station] = Station(station, x, y)
+
+        return station_dict
 
 
-def load_conns(station_list):
-    """Function that loads the 'ConnectiesHolland' file into a list of stations
+    def load_conns(self, source_file_neighbours):
+        """Function that loads the 'ConnectiesHolland' file into a list of stations
 
-    Returns:
-        List: list of stations in the file
-    """
+        Returns:
+            List: list of stations in the file
+        """
 
-    connecties = "../data/ConnectiesHolland.csv"
+        # open the ConnectiesHolland file
+        with open(source_file_neighbours, 'r') as f:
+            # skip first line
+            next(f)
 
-    # open the ConnectiesHolland file
-    with open(connecties) as f:
-        # skip first line
-        next(f)
+            # read every line in the file until EOF
+            while True:
+                line = f.readline()
+                if not line:
+                    break
+                
+                # split the lines into the two stations and the time it takes between them
+                splitline = line.split(",")
 
-        # read every line in the file until EOF
-        while True:
-            line = f.readline()
-            if not line:
-                break
-            
-            # split the lines into the two stations and the time it takes between them
-            splitline = line.split(",")
+                splitline[-1] = splitline[-1].strip()
 
-            splitline[-1] = splitline[-1].strip()
+                # string representations of the two stations and distance
+                station1 = splitline[0]
+                station2 = splitline[1]
+                distance = int(splitline[2])
+                
+                # node representation of the two stations
+                station_node1 = self.stations[station1]
+                station_node2 = self.stations[station2]
 
-            station = splitline[0]
-            destination = splitline[1]
-            distance = int(splitline[2])
-            
-            for place in station_list:
-                if station == place.name:
-                    place.add_conn(destination, distance)
+                # adding connections to the created node stations
+                station_node1.add_conn(station2, station_node2, distance)
+                station_node2.add_conn(station1, station_node1, distance)
 
-                if destination == place.name:
-                    place.add_conn(station, distance)
-            
-    return station_list
+    # string representation of station names with connected information in station nodes
+    def __repr__(self):
+        return f"{self.stations}"
 
-def load_all():
-    return load_conns(load_coords())
+
+n = Network('../data/StationsHolland.csv', '../data/ConnectiesHolland.csv')
+print(n)

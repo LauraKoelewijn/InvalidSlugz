@@ -1,24 +1,29 @@
+from typing import Dict, Tuple
+
 class Station():
-    def __init__(self, name: str) -> None:
-        self.name = name
-        self.connect = {}
-        self.visited = False
-        self.coord = []
+    def __init__(self, name: str, x, y) -> None:
+        self.name: str = name
+        self.connect: Dict[str, "Station"] = {}
+        self.distances: Dict[str, int] = {}
+        self.visited: bool = False
+        self.coord: Tuple[float] = [x, y]
 
-    def add_conn(self, location, time):
-        self.connect[location] = time
+    # adding connections to neighboring stations with time it takes to get there
+    def add_conn(self, name: str, location: "Station", time: int) -> None:
+        self.connect[name] = location
+        self.distances[name] = time
 
-    def add_coord(self, x, y):
-        self.coord = [x, y]
-
-    def been(self):
+    # change bool showing that the station is visited
+    def visit(self):
         self.visited = True
 
+    # check the status of the station if it is visited
     def is_visited(self):
         return self.visited
 
+    # representation of the class in string form
     def __repr__(self):
-        return f"{self.name} at {self.coord} with {self.connect}." 
+        return f"at {self.coord} with {self.distances}\n." 
 
 class Train():
     def __init__(self, name):
