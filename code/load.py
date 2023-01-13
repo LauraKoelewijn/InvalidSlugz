@@ -1,5 +1,7 @@
 from representatie import Station
 
+from typing import Dict
+
 class Network():
     def __init__(self, source_file, source_file_neighbours):
         self.stations: Dict[str, "Station"] = self.load_stations(source_file)
