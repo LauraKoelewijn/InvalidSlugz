@@ -1,4 +1,4 @@
-from station_node import Station
+from .station_node import Station
 import random
 
 class Train():

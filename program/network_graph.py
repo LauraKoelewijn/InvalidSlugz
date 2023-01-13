@@ -1,4 +1,4 @@
-from station_node import Station
+from .station_node import Station
 
 from typing import Dict
 
@@ -79,5 +79,3 @@ class Network():
     def __repr__(self):
         return f"{self.stations}"
 
-
-n = Network('../data/StationsHolland.csv', '../data/ConnectiesHolland.csv')
