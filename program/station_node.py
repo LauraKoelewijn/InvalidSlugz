@@ -23,4 +23,4 @@ class Station():
 
     # representation of the class in string form
     def __repr__(self):
-        return f"{self.name} with {self.distances}\n." 
+        return f"{self.name} with {self.distances}\n."

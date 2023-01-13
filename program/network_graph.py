@@ -56,7 +56,7 @@ class Network():
                 line = f.readline()
                 if not line:
                     break
-                
+
                 # split the lines into the two stations and the time it takes between them
                 splitline = line.split(",")
 
@@ -66,7 +66,7 @@ class Network():
                 station1 = splitline[0]
                 station2 = splitline[1]
                 distance = int(splitline[2])
-                
+
                 # node representation of the two stations
                 station_node1 = self.stations[station1]
                 station_node2 = self.stations[station2]
@@ -78,4 +78,3 @@ class Network():
     # string representation of station names with connected information in station nodes
     def __repr__(self):
         return f"{self.stations}"
-
