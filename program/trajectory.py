@@ -8,9 +8,15 @@ class Train():
         self.stop = False
         self.time = 0
         self.current_station = random.choice(list(self.stations.stations.values()))
-        self.trajectory = [self.current_station.name]
+        self.trajectory = []
 
-    def connect(self):        
+    def add_first_station(self):
+        self.trajectory.append(self.current_station.name)
+        self.current_station.visit()
+
+    def connect(self):
+        self.add_first_station()  
+
         while self.stop == False:
             choices = list(self.current_station.connect.values())
             visit_count = 0
@@ -29,9 +35,6 @@ class Train():
 
                 
     def add_station(self, station: "Station"):
-        print(f"current: {self.current_station}")
-        print(f"next: {station}")
-
         self.trajectory.append(station.name)
         time = self.current_station.distances[station.name]
         self.time = self.time + time
