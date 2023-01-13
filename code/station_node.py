@@ -23,17 +23,4 @@ class Station():
 
     # representation of the class in string form
     def __repr__(self):
-        return f"at {self.coord} with {self.distances}\n." 
-
-class Train():
-    def __init__(self, name):
-        self.name = name
-        self.trajectory = []
-        self.time = 0
-
-    def add_station(self, station: "Station", time: int):
-        self.trajectory.append(station)
-        self.time = self.time + time
-
-    def __repr__(self):
-        return f"{self.name} visits {self.trajectory} in {self.time} minutes."
+        return f"{self.name} with {self.distances}\n." 

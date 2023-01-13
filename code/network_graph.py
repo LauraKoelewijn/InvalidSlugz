@@ -1,4 +1,4 @@
-from representatie import Station
+from station_node import Station
 
 from typing import Dict
 
@@ -81,4 +81,3 @@ class Network():
 
 
 n = Network('../data/StationsHolland.csv', '../data/ConnectiesHolland.csv')
-print(n)
