@@ -6,10 +6,10 @@ class Train():
     def __init__(self, name, network, choices):
         self.stations = network
         self.name = name
-        self.stop = False
-        self.time = 0
-        self.current_station = self.choose_first_station(choices)
         self.trajectory = []
+        self.current_station = self.choose_first_station(choices)
+        self.stop = False
+        self.time = 0        
         self.station_counter = 0
     
     def choose_first_station(self, choices):
@@ -18,8 +18,9 @@ class Train():
         rand_station = random.choice([rand_connections.s1, rand_connections.s2])
 
         # add first station to trajectory list and set as visited
-        self.trajectory.append(self.current_station.name)
-        self.current_station.visit()
+
+        self.trajectory.append(rand_station.name)
+        rand_station.visit()
         return rand_station
 
     def connect(self):
