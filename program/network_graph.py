@@ -6,6 +6,7 @@ from typing import Dict
 class Network():
     def __init__(self, source_file, source_file_neighbours):
         self.stations: Dict[str, "Station"] = self.load_stations(source_file)
+        self.connections = []
         self.load_conns(source_file_neighbours)
 
     # make nodes for every station with coordinates
@@ -77,7 +78,18 @@ class Network():
                 # adding connections to the created node stations
                 station_node1.add_conn(connection)
                 station_node2.add_conn(connection)
+                self.connections.append(connection)
 
+    def check_connections(self):
+        # initialize empty list for unvisited connections
+        unvis = []
+        # loop though all connections
+        for conn in self.connections:
+            # if the connection has not been visited yet, add to the list
+            if not conn.is_visited():
+                unvis.append(conn)
+        return unvis
+    
     # string representation of station names with connected information in station nodes
     def __repr__(self):
         return f"{self.stations}"

@@ -1,9 +1,14 @@
 from program.algorithm import run
-from program.network_graph import Network
 from program.visualisation import visualize
 
-n = run()[0]
-trains = run()[1]
+# create a network and run the algorithm
+data_tuple = run()
+
+# save data from the run
+n = data_tuple[0]
+trains = data_tuple[1]
+
+# visualize the data
 visualize(n, trains)
 
 

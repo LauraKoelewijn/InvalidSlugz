@@ -14,10 +14,12 @@ def run():
 
         p_counter = 0
         min = 0
+        max_min = 0
 
         # make three trains/trajectories
-        for traj in range(3):
-            t = Train(f'train_{traj + 1}', n)
+        train_number = 1
+        while len(n.check_connections()) > 0:
+            t = Train(f'train_{train_number}', n, n.check_connections())
             t.connect()
             trains.append(t.trajectory)
 
@@ -28,13 +30,16 @@ def run():
             writer.writerow([t.name, str_repr])
             p_counter += t.station_counter
             min += t.time
+            train_number += 1
+            if t.time > max_min:
+                max_min = t.time
 
         # calculate parameters for objective function
         p = p_counter/28
-        t = traj + 1
+        t = train_number
 
         # put objective function into output file
         k = p*10000 - (t*100 + min)
         writer.writerow(["score", k])
 
-        return n, trains
+    return n, trains
