@@ -42,8 +42,16 @@ class Train():
                     choices.remove(next)
                 # else, choose this connection
                 else:
-                    self.add_station(next)
+                    self.check_time(next)
 
+    def check_time(self, connection: "Connection"):
+        # keep track of the total time of the trajectory
+        time = connection.time
+        if self.time + time <= 120:
+            self.time = self.time + time
+            self.add_station(connection)
+        else:
+            self.stop = True
 
     def add_station(self, connection: "Connection"):
         """Follows the chosen connection and adds the next station to the trajectory"""
@@ -52,10 +60,6 @@ class Train():
 
         # add the next station to the trajectory list
         self.trajectory.append(other_station.name)
-
-        # keep track of the total time of the trajectory
-        time = connection.time
-        self.time = self.time + time
 
         # set the current station and connection as visited
         self.current_station.visit()

@@ -18,7 +18,7 @@ def run():
 
         # make three trains/trajectories
         train_number = 1
-        while len(n.check_connections()) > 0:
+        while len(n.check_connections()) > 0 and train_number <= 7:
             t = Train(f'train_{train_number}', n, n.check_connections())
             t.connect()
             trains.append(t.trajectory)
@@ -34,9 +34,13 @@ def run():
             if t.time > max_min:
                 max_min = t.time
 
+        print(max_min)
+
         # calculate parameters for objective function
-        p = p_counter/28
-        t = train_number
+        total_connections = len(n.connections)
+        visited_connections = total_connections - len(n.check_connections())
+        p = visited_connections/total_connections
+        t = train_number - 1
 
         # put objective function into output file
         k = p*10000 - (t*100 + min)
