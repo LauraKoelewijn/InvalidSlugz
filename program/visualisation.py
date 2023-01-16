@@ -57,5 +57,8 @@ def visualize(network, trains):
         # plot the trajectory
         plt.plot(x_traj, y_traj)
 
+    # save plot
+    plt.savefig('output/holland_plot.png')
+
     # show the whole plot
     plt.show()
