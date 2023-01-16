@@ -1,6 +1,11 @@
-from program.algorithm import csv_file
+from program.algorithm import run
+from program.network_graph import Network
+from program.visualisation import visualize
 
-csv_file()      
+n = run()[0]
+trains = run()[1]
+visualize(n, trains)
+
 
 
 

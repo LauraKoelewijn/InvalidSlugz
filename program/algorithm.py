@@ -2,7 +2,9 @@ from .network_graph import Network
 from .trajectory import Train
 import csv
 
-def csv_file():
+def run():
+    trains = []
+
     with open('output/output.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter = ',')
         header = ["train", "stations"]
@@ -13,10 +15,11 @@ def csv_file():
         p_counter = 0
         min = 0
 
-        # amek three trains/trajectories
+        # make three trains/trajectories
         for traj in range(3):
             t = Train(f'train_{traj + 1}', n)
             t.connect()
+            trains.append(t.trajectory)
 
             # make good string representatioon without quotation marks
             str_repr = f'[%s]' % ', '.join(map(str, t.trajectory))
@@ -33,3 +36,5 @@ def csv_file():
         # put objective function into output file
         k = p*10000 - (t*100 + min)
         writer.writerow(["score", k])
+
+        return n, trains
