@@ -12,17 +12,24 @@ def csv_file():
 
         p_counter = 0
         min = 0
+
+        # amek three trains/trajectories
         for traj in range(3):
             t = Train(f'train_{traj + 1}', n)
             t.connect()
-            writer.writerow([t.name, t.trajectory])
+
+            # make good string representatioon without quotation marks
+            str_repr = f'[%s]' % ', '.join(map(str, t.trajectory))
+
+            #write the name and stations of the train to the output file
+            writer.writerow([t.name, str_repr])
             p_counter += t.station_counter
             min += t.time
 
+        # calculate parameters for objective function
         p = p_counter/28
         t = traj + 1
-        print(min)
 
-        # Objective function
+        # put objective function into output file
         k = p*10000 - (t*100 + min)
         writer.writerow(["score", k])

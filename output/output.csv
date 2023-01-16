@@ -1,5 +1,5 @@
 train,stations
-train_1,"['Dordrecht', 'Rotterdam Centraal', 'Rotterdam Alexander', 'Gouda', 'Alphen a/d Rijn', 'Leiden Centraal', 'Schiphol Airport', 'Amsterdam Zuid', 'Amsterdam Sloterdijk', 'Haarlem', 'Beverwijk', 'Castricum', 'Alkmaar', 'Den Helder']"
-train_2,"['Alkmaar', 'Den Helder']"
-train_3,"['Amsterdam Sloterdijk', 'Zaandam', 'Hoorn']"
-score,5156.285714285714
+train_1,"[Dordrecht, Rotterdam Centraal, Rotterdam Alexander, Gouda, Den Haag Centraal, Delft, Schiedam Centrum]"
+train_2,"[Beverwijk, Haarlem, Heemstede-Aerdenhout, Leiden Centraal, Alphen a/d Rijn]"
+train_3,"[Rotterdam Centraal, Schiedam Centrum]"
+score,3501.5714285714284
