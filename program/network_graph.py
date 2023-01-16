@@ -1,4 +1,5 @@
 from .station_node import Station
+from .connection_node import Connection
 
 from typing import Dict
 
@@ -71,9 +72,11 @@ class Network():
                 station_node1 = self.stations[station1]
                 station_node2 = self.stations[station2]
 
+                connection = Connection(station_node1, station_node2, distance)
+
                 # adding connections to the created node stations
-                station_node1.add_conn(station2, station_node2, distance)
-                station_node2.add_conn(station1, station_node1, distance)
+                station_node1.add_conn(connection)
+                station_node2.add_conn(connection)
 
     # string representation of station names with connected information in station nodes
     def __repr__(self):

@@ -1,4 +1,5 @@
 from .station_node import Station
+from .connection_node import Connection
 import random
 
 class Train():
@@ -19,7 +20,7 @@ class Train():
         self.add_first_station()
 
         while self.stop == False:
-            choices = list(self.current_station.connect.values())
+            choices = self.current_station.connect
             visit_count = 0
             for item in choices:
                 if item.is_visited():
@@ -35,12 +36,14 @@ class Train():
                 self.add_station(next)
 
 
-    def add_station(self, station: "Station"):
-        self.trajectory.append(station.name)
-        time = self.current_station.distances[station.name]
+    def add_station(self, connection: "Connection"):
+        other_station = connection.get_other_station(self.current_station)
+        self.trajectory.append(other_station.name)
+        time = connection.time
         self.time = self.time + time
         self.current_station.visit()
-        self.current_station = station
+        connection.visit()
+        self.current_station = other_station
         self.station_counter += 1
 
     def __repr__(self):

@@ -17,13 +17,14 @@ def visualize(network, trains):
         coords.append(station.coord)
 
         # load connections for this station
-        connections = station.connect.values()
+        connections = station.connect
 
         # loop though connections
         for con in connections:
+            other = con.get_other_station(station)
             # save coordinates of all the connections
-            x_line = [station.coord[0], con.coord[0]]
-            y_line = [station.coord[1], con.coord[1]]
+            x_line = [station.coord[0], other.coord[0]]
+            y_line = [station.coord[1], other.coord[1]]
 
             # plot connections between all stations
             plt.plot(x_line, y_line, color = 'black')

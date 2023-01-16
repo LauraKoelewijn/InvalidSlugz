@@ -1,17 +1,16 @@
-from typing import Dict, Tuple
+from .connection_node import Connection
+from typing import Dict, Tuple, List
 
 class Station():
     def __init__(self, name: str, x, y) -> None:
         self.name: str = name
-        self.connect: Dict[str, "Station"] = {}
-        self.distances: Dict[str, int] = {}
+        self.connect: List["Connection"] = []
         self.visited: bool = False
         self.coord: Tuple[float] = [x, y]
 
     # adding connections to neighboring stations with time it takes to get there
-    def add_conn(self, name: str, location: "Station", time: int) -> None:
-        self.connect[name] = location
-        self.distances[name] = time
+    def add_conn(self, connection: "Connection") -> None:
+        self.connect.append(connection)
 
     # change bool showing that the station is visited
     def visit(self):
