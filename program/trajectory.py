@@ -9,27 +9,26 @@ class Train():
         self.trajectory = []
         self.current_station = self.choose_first_station(choices)
         self.stop = False
-        self.time = 0        
+        self.time = 0
         self.station_counter = 0
-    
+
+
     def choose_first_station(self, choices):
         """Chooses the first station randomly from the list of unvisited connections"""
         rand_connections = random.choice(choices)
         rand_station = random.choice([rand_connections.s1, rand_connections.s2])
 
         # add first station to trajectory list and set as visited
-
         self.trajectory.append(rand_station.name)
         rand_station.visit()
         return rand_station
 
     def connect(self):
-        """Moves the current train to new possible connections 
+        """Moves the current train to new possible connections
             until all possible connections are visited"""
         while self.stop == False:
             # set choices as all connections from the current station
             choices = self.current_station.connect
-
             # if all connections have been visited
             if len(choices) == 0:
                 # end the trajectory

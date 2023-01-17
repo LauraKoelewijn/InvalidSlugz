@@ -10,7 +10,3 @@ trains = data_tuple[1]
 
 # visualize the data
 visualize(n, trains)
-
-
-
-
