@@ -11,7 +11,7 @@ class Train():
         self.stop = False
         self.time = 0
         self.station_counter = 0
-
+        
 
     def choose_first_station(self, choices):
         """Chooses the first station randomly from the list of unvisited connections"""
