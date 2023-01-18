@@ -26,7 +26,7 @@ def run():
             # make good string representatioon without quotation marks
             str_repr = f'[%s]' % ', '.join(map(str, t.trajectory))
 
-            #write the name and stations of the train to the output file
+            # write the name and stations of the train to the output file
             writer.writerow([t.name, str_repr])
             p_counter += t.station_counter
             min += t.time
