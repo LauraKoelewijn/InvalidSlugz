@@ -90,6 +90,16 @@ class Network():
                 unvis.append(conn)
         return unvis
     
+    def check_stations(self):
+        # initialize empty list for unvisited stations
+        unvis = []
+        # loop though all stations
+        for station in self.stations.values():
+            # if the station has not been visited yet, add to the list
+            if not station.is_visited():
+                unvis.append(station)
+        return unvis
+    
     # string representation of station names with connected information in station nodes
     def __repr__(self):
         return f"{self.stations}"

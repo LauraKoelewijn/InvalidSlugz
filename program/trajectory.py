@@ -3,20 +3,24 @@ import random
 
 class Train():
     """Representation of a trajectory"""
-    def __init__(self, name, network, choices):
+    def __init__(self, name, network):
         self.stations = network
         self.name = name
         self.trajectory = []
-        self.current_station = self.choose_first_station(choices)
+        self.current_station = self.choose_first_station()
         self.stop = False
         self.time = 0
         self.station_counter = 0
-        
 
-    def choose_first_station(self, choices):
+
+    def choose_first_station(self):
         """Chooses the first station randomly from the list of unvisited connections"""
-        rand_connections = random.choice(choices)
-        rand_station = random.choice([rand_connections.s1, rand_connections.s2])
+        available_stations = []
+        for station in self.stations.stations.values():
+            if not station.visited:
+                available_stations.append(station)
+
+        rand_station = random.choice(available_stations)
 
         # add first station to trajectory list and set as visited
         self.trajectory.append(rand_station.name)
@@ -42,6 +46,8 @@ class Train():
                 # else, choose this connection
                 else:
                     self.check_time(next)
+        
+        self.current_station.visit()
 
     def check_time(self, connection: "Connection"):
         # keep track of the total time of the trajectory

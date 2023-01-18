@@ -18,8 +18,8 @@ def run():
 
         # make three trains/trajectories
         train_number = 1
-        while len(n.check_connections()) > 0 and train_number <= 7:
-            t = Train(f'train_{train_number}', n, n.check_connections())
+        while len(n.check_stations()) > 0 and train_number <= 7:
+            t = Train(f'train_{train_number}', n)
             t.connect()
             trains.append(t.trajectory)
 
