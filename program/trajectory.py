@@ -1,5 +1,6 @@
 from .connection_node import Connection
 import random
+import copy
 
 class Train():
     """Representation of a trajectory"""
@@ -11,7 +12,6 @@ class Train():
         self.stop = False
         self.time = 0
         self.station_counter = 0
-
 
     def choose_first_station(self):
         """Chooses the first station randomly from the list of unvisited connections"""
@@ -31,9 +31,15 @@ class Train():
         """Moves the current train to new possible connections
             until all possible connections are visited"""
         while self.stop == False:
-            # set choices as all connections from the current station
-            choices = self.current_station.connect
-            # if all connections have been visited
+            # initiate empty list to put unvisited connection 
+            choices = []
+            # loop though all connections
+            for connection in self.current_station.connect:
+                # if the connection hasn't been visited before, add to the list
+                if not connection.is_visited():
+                    choices.append(connection)
+
+            # if there are no unvisited connections available        
             if len(choices) == 0:
                 # end the trajectory
                 self.stop = True
@@ -41,14 +47,33 @@ class Train():
                 # choose next station randomly from the possible connections
                 next = random.choice(choices)
                 # if the connection has been visited before, remove from the list
-                if next.is_visited() == True:
-                    choices.remove(next)
-                # else, choose this connection
-                else:
-                    self.check_time(next)
+                self.check_time(next)
         
         self.current_station.visit()
 
+    def connect_with_used(self):
+        while self.stop == False:
+            # initiate empty list to put unvisited connection 
+            choices = []
+
+            # loop though all connections
+            for connection in self.current_station.connect:
+                # if the connection hasn't been visited before, add to the list
+                if not connection.is_visited():
+                    choices.append(connection)
+            # if there are no unvisited connections available        
+            if len(choices) == 0:
+                # choose a random connection
+                all_conns = self.current_station.connect
+                next = random.choice(all_conns)
+                self.check_time(next)
+            else:
+                # choose next station randomly from the possible connections
+                next = random.choice(choices)
+                # if the connection has been visited before, remove from the list
+                self.check_time(next)
+        self.current_station.visit()
+            
     def check_time(self, connection: "Connection"):
         # keep track of the total time of the trajectory
         time = connection.time

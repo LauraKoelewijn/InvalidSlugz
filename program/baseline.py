@@ -1,5 +1,6 @@
 from .network_graph import Network
 from .trajectory import Train
+from statistics import mean
 
 import matplotlib.pyplot as plt
 
@@ -34,8 +35,12 @@ def hist(iteration):
     plt.xlabel("K values (objective function output)")
     plt.ylabel("Frequency")
 
+    plt.axvline(mean(solutions), color = 'k', linestyle = 'dashed')
+    min_ylim, max_ylim = plt.ylim()
+    plt.text(mean(solutions) * 1.01, max_ylim * 0.9, 'Mean: {:.2f}'.format(mean(solutions)))
+
     # save and show the histogram
-    plt.savefig('output/baseline_hist.png')
+    plt.savefig('output/baseline_hist_no_bias.png')
     plt.show()
 
 
