@@ -21,8 +21,8 @@ def run():
         while len(n.check_stations()) > 0 and train_number <= 7:
             t = Train(f'train_{train_number}', n)
             # choose which baseline to use
-            # t.connect_with_used()
-            t.connect()
+            t.connect_with_used()
+            # t.connect()
             trains.append(t.trajectory)
 
             # make good string representation without quotation marks

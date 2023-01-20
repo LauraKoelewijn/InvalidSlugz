@@ -12,4 +12,4 @@ trains = data_tuple[1]
 # visualize the data
 visualize(n, trains)
 
-hist(1000)
+# hist(1000)
