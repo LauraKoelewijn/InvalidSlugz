@@ -30,3 +30,6 @@ class Connection():
             return self.s1
         else:
             return False
+    # 
+    # def __repr__(self):
+    #     return f"verbinding tussen {self.s1} en {self.s2} in {self.time} minuten"
