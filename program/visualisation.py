@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import geopandas as gpd
+import contextily as cx
+
 from .network_graph import Network
 
 def visualize(network, trains):
@@ -10,7 +12,11 @@ def visualize(network, trains):
     # load network_graph
     stations = network.stations.values()
 
-    # PLOT ALL CONNECTIONS
+    img = plt.imread("data/map.png")
+    fix, ax = plt.subplots()
+    ax.imshow(img, extent=[3.1, 7.5, 50.6, 53.7])
+
+    # PLOT ALL CONNECTIONS   
     # loop through all stations in the network_graph
     for station in stations:
         # add station name and coordinates to the lists
@@ -28,16 +34,16 @@ def visualize(network, trains):
             y_line = [station.coord[1], other.coord[1]]
 
             # plot connections between all stations
-            plt.plot(x_line, y_line, color = 'black')
-
+            ax.plot(x_line, y_line, color = 'black')
+    
     # unzip the tuples and plot them
     x,y = zip(*coords)
-    plt.scatter(x, y)
+    ax.scatter(x, y)
 
     # add names of the stations to the points
     for index, label in enumerate(names):
         plt.annotate(label,(x[index], y[index]))
-
+    
     #hide axes
     ax = plt.gca()
     ax.get_yaxis().set_visible(False)
@@ -57,8 +63,7 @@ def visualize(network, trains):
             x_traj.append(station_coords[0])
             y_traj.append(station_coords[1])
         # plot the trajectory
-        plt.plot(x_traj, y_traj)
-
+        ax.plot(x_traj, y_traj)    
 
     # loading file of boarders of Holland
     df_places = gpd.read_file('data/holland_regions.geojson')
@@ -66,8 +71,8 @@ def visualize(network, trains):
     # looping through regions in the data file and plotting them in a matplotlib graph
     for polygon in df_places['geometry']:
         x,y = polygon.exterior.xy
-        plt.plot(x,y)
-
+        ax.plot(x,y)
+    
     # save plot
     plt.savefig('output/holland_plot.png')
 
