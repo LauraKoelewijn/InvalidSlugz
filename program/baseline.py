@@ -5,7 +5,7 @@ from statistics import mean
 import matplotlib.pyplot as plt
 
 def hist(iteration):
-    """Create a histogram of the baseline algorithm, 
+    """Create a histogram of the baseline algorithm,
         showing only the viable outputs"""
 
     # initialise list for viable solutions
@@ -22,8 +22,8 @@ def hist(iteration):
         if k != False:
             solutions.append(k)
             succes += 1
-    
-    # calculate the percentage of viable outputted solutions 
+
+    # calculate the percentage of viable outputted solutions
     percentage_succes = (succes/iteration) * 100
 
     # plot a histogram of the data devided in 10 bins
@@ -58,7 +58,7 @@ def run():
     min = 0
     max_min = 0
 
-    # make trains/trajectories until all stations have been visited 
+    # make trains/trajectories until all stations have been visited
     # and no more than 7 trains have been initialised
     train_number = 1
     while len(n.check_stations()) > 0 and train_number <= 7:

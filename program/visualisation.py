@@ -10,7 +10,7 @@ def visualize(network, trains):
     # load network_graph
     stations = network.stations.values()
 
-    # PLOT ALL CONNECTIONS   
+    # PLOT ALL CONNECTIONS
     # loop through all stations in the network_graph
     for station in stations:
         # add station name and coordinates to the lists
@@ -29,7 +29,7 @@ def visualize(network, trains):
 
             # plot connections between all stations
             plt.plot(x_line, y_line, color = 'black')
-    
+
     # unzip the tuples and plot them
     x,y = zip(*coords)
     plt.scatter(x, y)
@@ -37,7 +37,7 @@ def visualize(network, trains):
     # add names of the stations to the points
     for index, label in enumerate(names):
         plt.annotate(label,(x[index], y[index]))
-    
+
     #hide axes
     ax = plt.gca()
     ax.get_yaxis().set_visible(False)
@@ -58,7 +58,7 @@ def visualize(network, trains):
             y_traj.append(station_coords[1])
         # plot the trajectory
         plt.plot(x_traj, y_traj)
-    
+
 
     # loading file of boarders of Holland
     df_places = gpd.read_file('data/holland_regions.geojson')

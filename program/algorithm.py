@@ -16,11 +16,12 @@ def run():
         min = 0
         max_min = 0
 
-        # make three trains/trajectories
+        # make the trains/trajectories
         train_number = 1
         while len(n.check_stations()) > 0 and train_number <= 7:
             t = Train(f'train_{train_number}', n)
-            # choose which baseline to use
+            # choose which algorithm to use
+            # t.greedy_time()
             t.connect_with_used()
             # t.connect()
             trains.append(t.trajectory)

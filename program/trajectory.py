@@ -31,7 +31,7 @@ class Train():
         """Moves the current train to new possible connections
             until all possible connections are visited"""
         while self.stop == False:
-            # initiate empty list to put unvisited connection 
+            # initiate empty list to put unvisited connection
             choices = []
             # loop though all connections
             for connection in self.current_station.connect:
@@ -39,7 +39,7 @@ class Train():
                 if not connection.is_visited():
                     choices.append(connection)
 
-            # if there are no unvisited connections available        
+            # if there are no unvisited connections available
             if len(choices) == 0:
                 # end the trajectory
                 self.stop = True
@@ -48,12 +48,16 @@ class Train():
                 next = random.choice(choices)
                 # if the connection has been visited before, remove from the list
                 self.check_time(next)
-        
+
         self.current_station.visit()
 
-    def connect_with_used(self):
+    def greedy_time(self):
+        """Moves current train to nearest possible stations by choosing
+        the connection with the lowest time, until all possible connections
+        are visited. If there are no unvisited connections, it chooses
+        a random connection."""
         while self.stop == False:
-            # initiate empty list to put unvisited connection 
+            # initiate empty list to put unvisited connection
             choices = []
 
             # loop though all connections
@@ -61,7 +65,35 @@ class Train():
                 # if the connection hasn't been visited before, add to the list
                 if not connection.is_visited():
                     choices.append(connection)
-            # if there are no unvisited connections available        
+
+            # if there are no unvisited connections available
+            if len(choices) == 0:
+                # choose a random connection
+                all_conns = self.current_station.connect
+                next = random.choice(all_conns)
+                self.check_time(next)
+            else:
+                # sort choices list from least amount of minute to the most
+                choices.sort(key=lambda x: x.time, reverse=False)
+                # return new sorted list
+                sorted_choices = sorted(choices, key=lambda x: x.time, reverse=False)
+                # pick first connection of the list, which is the shortest
+                next = sorted_choices[0]
+                # if the connection has been visited before, remove from the list
+                self.check_time(next)
+        self.current_station.visit()
+
+    def connect_with_used(self):
+        while self.stop == False:
+            # initiate empty list to put unvisited connection
+            choices = []
+
+            # loop though all connections
+            for connection in self.current_station.connect:
+                # if the connection hasn't been visited before, add to the list
+                if not connection.is_visited():
+                    choices.append(connection)
+            # if there are no unvisited connections available
             if len(choices) == 0:
                 # choose a random connection
                 all_conns = self.current_station.connect
@@ -73,7 +105,7 @@ class Train():
                 # if the connection has been visited before, remove from the list
                 self.check_time(next)
         self.current_station.visit()
-            
+
     def check_time(self, connection: "Connection"):
         # keep track of the total time of the trajectory
         time = connection.time
