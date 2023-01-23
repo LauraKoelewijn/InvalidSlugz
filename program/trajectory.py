@@ -4,7 +4,8 @@ import copy
 
 class Train():
     """Representation of a trajectory"""
-    def __init__(self, name, network):
+    def __init__(self, name, network, which_region = 'holland'):
+        self.which_region = which_region
         self.stations = network
         self.name = name
         self.trajectory = []
@@ -107,9 +108,17 @@ class Train():
         self.current_station.visit()
 
     def check_time(self, connection: "Connection"):
+
+        # check if requested map is of holland or the whole nl
+        # and change the amount of minutes the train may ride accordingly
+        if self.which_region == 'nl':
+            max_time = 180
+        elif self.which_region == 'holland':
+            max_time = 120
+
         # keep track of the total time of the trajectory
         time = connection.time
-        if self.time + time <= 180:
+        if self.time + time <= max_time:
             self.time = self.time + time
             self.add_station(connection)
         else:
