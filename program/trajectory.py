@@ -4,29 +4,43 @@ import copy
 
 class Train():
     """Representation of a trajectory"""
-    def __init__(self, name, network, which_region = 'holland'):
+    def __init__(self, name, network, which_region = 'holland', start = 'random'):
         self.which_region = which_region
         self.stations = network
         self.name = name
         self.trajectory = []
-        self.current_station = self.choose_first_station()
+        self.current_station = self.choose_first_station(start)
         self.stop = False
         self.time = 0
         self.station_counter = 0
 
-    def choose_first_station(self):
+    def choose_first_station(self, start):
         """Chooses the first station randomly from the list of unvisited connections"""
         available_stations = []
         for station in self.stations.stations.values():
             if not station.visited:
                 available_stations.append(station)
-
-        rand_station = random.choice(available_stations)
+        
+        if start == 'min_con':
+            min_con = None
+            for choose_station in available_stations:
+                con_count = 0
+                for con in choose_station.connect:
+                    con_count +=1
+                
+                if min_con == None:
+                    min_con = con_count
+                    rand_station = choose_station
+                elif con_count < min_con:
+                    min_con = con_count
+                    first_station = choose_station
+        elif start == 'random':
+            first_station = random.choice(available_stations)
 
         # add first station to trajectory list and set as visited
-        self.trajectory.append(rand_station.name)
-        rand_station.visit()
-        return rand_station
+        self.trajectory.append(first_station.name)
+        first_station.visit()
+        return first_station
 
     def connect(self):
         """Moves the current train to new possible connections

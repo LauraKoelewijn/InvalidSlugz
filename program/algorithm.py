@@ -2,7 +2,7 @@ from .network_graph import Network
 from .trajectory import Train
 import csv
 
-def run(which_regions = 'holland'):
+def run(which_regions = 'holland', start = 'random'):
     trains = []
 
     if which_regions == 'nl':
@@ -28,7 +28,7 @@ def run(which_regions = 'holland'):
         # make the trains/trajectories
         train_number = 1
         while len(n.check_stations()) > 0 and train_number <= traj_num:
-            t = Train(f'train_{train_number}', n, which_regions)
+            t = Train(f'train_{train_number}', n, which_regions, start)
             # choose which algorithm to use
             t.greedy_time()
             # t.connect_with_used()

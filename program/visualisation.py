@@ -1,5 +1,7 @@
 import matplotlib.pyplot as plt
 import geopandas as gpd
+import contextily as cx
+
 from .network_graph import Network
 
 def visualize(network, trains, which_region = 'holland'):
@@ -69,7 +71,8 @@ def visualize(network, trains, which_region = 'holland'):
             x_traj.append(station_coords[0])
             y_traj.append(station_coords[1])
         # plot the trajectory
-        plt.plot(x_traj, y_traj)
+        ax = plt.plot(x_traj, y_traj)
+        cx.add_basemap()
     
 
     # loading file of boarders of Holland

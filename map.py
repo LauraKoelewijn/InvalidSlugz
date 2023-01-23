@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import geopandas as gpd
 import contextily as cx
 
-df = gpd.read_file('data/holland_regions.geojson')
+df = gpd.read_file('data/nl_regions.geojson')
 
 df_wm = df.to_crs(epsg=3857)
 ax = df_wm.plot(figsize=(10, 10), alpha=0.5, edgecolor='k')

@@ -44,9 +44,18 @@ def hist(iteration):
     plt.show()
 
 
-def run():
+def run(which_station = 'holland', start = 'random'):
     """run the random algorithm and return a objective function output
             or a bool, showing that it is not a viable output"""
+
+    if which_regions == 'nl':
+        traj_num = 20
+        data_stations = 'data/StationsNationaal.csv'
+        data_connections = 'data/ConnectiesNationaal.csv'
+    elif which_regions == 'holland':
+        traj_num = 7
+        data_stations = 'data/StationsHolland.csv'
+        data_connections = 'data/ConnectiesHolland.csv'
 
     # initialise an empty list of trajectories
     trains = []
@@ -62,7 +71,7 @@ def run():
     # and no more than 7 trains have been initialised
     train_number = 1
     while len(n.check_stations()) > 0 and train_number <= 7:
-        t = Train(f'train_{train_number}', n)
+        t = Train(f'train_{train_number}', n, which_station, start)
         t.connect()
         trains.append(t.trajectory)
 
