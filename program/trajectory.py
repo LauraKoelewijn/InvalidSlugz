@@ -24,13 +24,11 @@ class Train():
         if start == 'min_con':
             min_con = None
             for choose_station in available_stations:
-                con_count = 0
-                for con in choose_station.connect:
-                    con_count +=1
-                
+                con_count = len(choose_station.connect)
+
                 if min_con == None:
                     min_con = con_count
-                    rand_station = choose_station
+                    first_station = choose_station
                 elif con_count < min_con:
                     min_con = con_count
                     first_station = choose_station

@@ -17,12 +17,18 @@ def visualize(network, trains, which_region = 'holland'):
     names = []
     coords = []
 
+    df = gpd.read_file('data/nl_regions.geojson')
+
+    df_wm = df.to_crs(epsg=3857)
+    ax = df_wm.plot(figsize=(10, 10), alpha=0.5, edgecolor='k')
+    cx.add_basemap(ax)
+
     # load network_graph
     stations = network.stations.values()
 
-    img = plt.imread("data/map.png")
-    fix, ax = plt.subplots()
-    ax.imshow(img, extent=[3.1, 7.5, 50.6, 53.7])
+    # img = plt.imread("data/map.png")
+    # fix, ax = plt.subplots()
+    # ax.imshow(img, extent=[3.1, 7.5, 50.6, 53.7])
 
     # PLOT ALL CONNECTIONS   
     # loop through all stations in the network_graph
@@ -71,17 +77,17 @@ def visualize(network, trains, which_region = 'holland'):
             x_traj.append(station_coords[0])
             y_traj.append(station_coords[1])
         # plot the trajectory
-        ax = plt.plot(x_traj, y_traj)
-        cx.add_basemap()
+        plt.plot(x_traj, y_traj)
+        
     
 
-    # loading file of boarders of Holland
-    df_places = gpd.read_file(geo_json_file)
+    # # loading file of boarders of Holland
+    # df_places = gpd.read_file(geo_json_file)
 
-    # looping through regions in the data file and plotting them in a matplotlib graph
-    for polygon in df_places['geometry']:
-        x,y = polygon.exterior.xy
-        plt.plot(x,y)
+    # # looping through regions in the data file and plotting them in a matplotlib graph
+    # for polygon in df_places['geometry']:
+    #     x,y = polygon.exterior.xy
+    #     plt.plot(x,y)
 
     # save plot
     plt.savefig(save_plot)
