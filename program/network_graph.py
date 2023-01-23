@@ -67,7 +67,7 @@ class Network():
                 # string representations of the two stations and distance
                 station1 = splitline[0]
                 station2 = splitline[1]
-                distance = int(splitline[2])
+                distance = float(splitline[2])
 
                 # node representation of the two stations
                 station_node1 = self.stations[station1]

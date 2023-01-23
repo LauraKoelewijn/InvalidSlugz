@@ -109,7 +109,7 @@ class Train():
     def check_time(self, connection: "Connection"):
         # keep track of the total time of the trajectory
         time = connection.time
-        if self.time + time <= 120:
+        if self.time + time <= 180:
             self.time = self.time + time
             self.add_station(connection)
         else:

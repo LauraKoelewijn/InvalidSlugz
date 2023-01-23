@@ -2,15 +2,24 @@ from .network_graph import Network
 from .trajectory import Train
 import csv
 
-def run():
+def run(which_regions = 'holland'):
     trains = []
+
+    if which_regions == 'nl':
+        traj_num = 20
+        data_stations = 'data/StationsNationaal.csv'
+        data_connections = 'data/ConnectiesNationaal.csv'
+    elif which_regions == 'holland':
+        traj_num = 7
+        data_stations = 'data/StationsHolland.csv'
+        data_connections = 'data/ConnectiesHolland.csv'
 
     with open('output/output.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter = ',')
         header = ["train", "stations"]
         writer.writerow(header)
 
-        n = Network('data/StationsHolland.csv', 'data/ConnectiesHolland.csv')
+        n = Network(data_stations, data_connections)
 
         p_counter = 0
         min = 0
@@ -18,11 +27,11 @@ def run():
 
         # make the trains/trajectories
         train_number = 1
-        while len(n.check_stations()) > 0 and train_number <= 7:
+        while len(n.check_stations()) > 0 and train_number <= traj_num:
             t = Train(f'train_{train_number}', n)
             # choose which algorithm to use
-            # t.greedy_time()
-            t.connect_with_used()
+            t.greedy_time()
+            # t.connect_with_used()
             # t.connect()
             trains.append(t.trajectory)
 

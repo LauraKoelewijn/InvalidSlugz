@@ -2,7 +2,15 @@ import matplotlib.pyplot as plt
 import geopandas as gpd
 from .network_graph import Network
 
-def visualize(network, trains):
+def visualize(network, trains, which_region = 'holland'):
+
+    if which_region == 'nl':
+        geo_json_file = 'data/nl_regions.geojson'
+        save_plot = 'output/holland_plot.png'
+    elif which_region == 'holland':
+        geo_json_file ='data/holland_regions.geojson'
+        save_plot = 'output/holland_plot.png'
+    
     # intialize empty lists for the plotting
     names = []
     coords = []
@@ -65,7 +73,7 @@ def visualize(network, trains):
     
 
     # loading file of boarders of Holland
-    df_places = gpd.read_file('data/holland_regions.geojson')
+    df_places = gpd.read_file(geo_json_file)
 
     # looping through regions in the data file and plotting them in a matplotlib graph
     for polygon in df_places['geometry']:
@@ -73,7 +81,7 @@ def visualize(network, trains):
         plt.plot(x,y)
 
     # save plot
-    plt.savefig('output/holland_plot.png')
+    plt.savefig(save_plot)
 
     # show the whole plot
     plt.show()
