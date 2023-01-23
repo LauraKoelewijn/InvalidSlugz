@@ -4,7 +4,7 @@ from statistics import mean
 
 import matplotlib.pyplot as plt
 
-def hist(iteration, which_station = 'holland', start = 'random'):
+def hist(iteration, which_regions = 'holland', start = 'random'):
     """Create a histogram of the baseline algorithm,
         showing only the viable outputs"""
 
@@ -16,7 +16,7 @@ def hist(iteration, which_station = 'holland', start = 'random'):
 
     # run the random algorithm x number of times
     for i in range(iteration):
-        k = run(which_station, start)
+        k = run(which_regions, start)
 
         # check if the output of the run is viable then append to initialised list
         if k != False:
@@ -43,7 +43,7 @@ def hist(iteration, which_station = 'holland', start = 'random'):
     plt.savefig('output/baseline_hist_no_bias.png')
     plt.show()
 
-def run(which_station = 'holland', start = 'random'):
+def run(which_regions = 'holland', start = 'random'):
     """run the random algorithm and return a objective function output
             or a bool, showing that it is not a viable output"""
 
