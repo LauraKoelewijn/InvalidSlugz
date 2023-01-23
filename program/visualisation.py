@@ -2,8 +2,6 @@ import matplotlib.pyplot as plt
 import geopandas as gpd
 from matplotlib.pyplot import figure
 
-
-
 from .network_graph import Network
 
 def visualize(network, trains, which_region = 'holland'):

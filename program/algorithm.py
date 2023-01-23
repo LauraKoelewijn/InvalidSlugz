@@ -30,8 +30,9 @@ def run(which_regions = 'holland', start = 'random'):
         while len(n.check_stations()) > 0 and train_number <= traj_num:
             t = Train(f'train_{train_number}', n, which_regions, start)
             # choose which algorithm to use
-            t.greedy_time()
-            # t.connect_with_used()
+            # t.greedy_time()
+            # t.greedy_conns()
+            t.connect_with_used()
             # t.connect()
             trains.append(t.trajectory)
 

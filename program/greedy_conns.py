@@ -21,20 +21,30 @@ def greedy_conns(self):
             self.check_time(next)
         else:
             # current station is set as station with minimal connections
-            min_con = self.current_station
+            min_con = None
             # loop through list with stations
-            for station in choices:
+            for connection in choices:
+                # get the station that is connected with each connection
+                station = connection.get_other_station()
                 # save the connection count of every station
                 con_count = len(station.connect)
-                # if the connection count is less than the count of current station
-                # with minimal connections, set new station as min_con
-                if con_count < min_con:
+
+                if min_con == None:
                     min_con = con_count
-                    next = station
+                    next = connection
+                # if the connection count is less than the connection count of current station
+                # with minimal connections, set new connection as next
+                elif con_count < min_con:
+                    min_con = con_count
+                    next = connection
+    
+            self.check_time(next)
+
+        self.current_station.visit()
 
         # add station to trajectory list and set as visited
         # if the connection has been visited before, remove from the list
         # WAAR MOET DE CHECK TIME??
         # self.check_time(next)
-        self.trajectory.append(next.name)
-        next.visit()
+        # self.trajectory.append(next.name)
+        # next.visit()
