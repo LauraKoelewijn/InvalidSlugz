@@ -166,8 +166,6 @@ class Train():
                         next = random.choice(random_choice)
         
                 self.check_time(next)
-            print(self.name)
-            print(len(choices))
         self.current_station.visit()
 
     def check_time(self, connection: "Connection"):

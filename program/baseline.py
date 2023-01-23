@@ -70,7 +70,7 @@ def run(which_regions = 'holland', start = 'random'):
     # and no more than 7 trains have been initialised
     train_number = 1
     while len(n.check_stations()) > 0 and train_number <= traj_num:
-        t = Train(f'train_{train_number}', n, which_station, start)
+        t = Train(f'train_{train_number}', n, which_regions, start)
         t.connect()
         trains.append(t.trajectory)
 
