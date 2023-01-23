@@ -4,7 +4,7 @@ from statistics import mean
 
 import matplotlib.pyplot as plt
 
-def hist(iteration):
+def hist(iteration, which_station = 'holland', start = 'random'):
     """Create a histogram of the baseline algorithm,
         showing only the viable outputs"""
 
@@ -16,7 +16,7 @@ def hist(iteration):
 
     # run the random algorithm x number of times
     for i in range(iteration):
-        k = run()
+        k = run(which_station, start)
 
         # check if the output of the run is viable then append to initialised list
         if k != False:
@@ -43,7 +43,6 @@ def hist(iteration):
     plt.savefig('output/baseline_hist_no_bias.png')
     plt.show()
 
-
 def run(which_station = 'holland', start = 'random'):
     """run the random algorithm and return a objective function output
             or a bool, showing that it is not a viable output"""
@@ -61,7 +60,7 @@ def run(which_station = 'holland', start = 'random'):
     trains = []
 
     # create a network
-    n = Network('data/StationsHolland.csv', 'data/ConnectiesHolland.csv')
+    n = Network(data_stations, data_connections)
 
     p_counter = 0
     min = 0
@@ -70,7 +69,7 @@ def run(which_station = 'holland', start = 'random'):
     # make trains/trajectories until all stations have been visited
     # and no more than 7 trains have been initialised
     train_number = 1
-    while len(n.check_stations()) > 0 and train_number <= 7:
+    while len(n.check_stations()) > 0 and train_number <= traj_num:
         t = Train(f'train_{train_number}', n, which_station, start)
         t.connect()
         trains.append(t.trajectory)
