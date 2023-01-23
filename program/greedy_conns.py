@@ -40,7 +40,7 @@ def greedy_conns(self):
     
             self.check_time(next)
 
-        self.current_station.visit()
+    self.current_station.visit()
 
         # add station to trajectory list and set as visited
         # if the connection has been visited before, remove from the list

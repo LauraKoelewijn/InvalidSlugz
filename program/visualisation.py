@@ -72,14 +72,14 @@ def visualize(network, trains, which_region = 'holland'):
             y_traj.append(station_coords[1])
         # plot the trajectory
         plt.plot(x_traj, y_traj)
-    
-    # # add names of the stations to the points
-    # for index, label in enumerate(names):
-    #     plt.annotate(label,(x[index], y[index]))
 
     # unzip the tuples and plot them
     x,y = zip(*coords)
     plt.scatter(x, y)
+        
+    # add names of the stations to the points
+    for index, label in enumerate(names):
+        plt.annotate(label,(x[index], y[index]))
         
     # save plot
     plt.savefig(save_plot)

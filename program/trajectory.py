@@ -117,6 +117,7 @@ class Train():
                 next = sorted_choices[0]
                 # if the connection has been visited before, remove from the list
                 self.check_time(next)
+            
         self.current_station.visit()
     
     def greedy_conns(self):
@@ -158,9 +159,15 @@ class Train():
                     elif con_count < min_con:
                         min_con = con_count
                         next = connection
+
+                    # probleem voor later, bias kiest de middelste optie het vaakst
+                    elif con_count == min_con:
+                        random_choice = [next, connection]
+                        next = random.choice(random_choice)
         
                 self.check_time(next)
-
+            print(self.name)
+            print(len(choices))
         self.current_station.visit()
 
     def check_time(self, connection: "Connection"):
