@@ -20,7 +20,7 @@ class Train():
         for station in self.stations.stations.values():
             if not station.visited:
                 available_stations.append(station)
-        
+
         if start == 'min_con':
             min_con = None
             for choose_station in available_stations:
@@ -93,7 +93,7 @@ class Train():
         are visited. If there are no unvisited connections, it chooses
         a random connection."""
         while self.stop == False:
-            # initiate empty list to put unvisited connection
+            # initiate empty list to put unvisited connections
             choices = []
 
             # loop though all connections
@@ -117,16 +117,16 @@ class Train():
                 next = sorted_choices[0]
                 # if the connection has been visited before, remove from the list
                 self.check_time(next)
-            
+
         self.current_station.visit()
-    
+
     def greedy_conns(self):
         """Moves current train to next possible stations by choosing
         the station that holds the least amount of connections, until all
         possible connections are visited. If there are no unvisited connections,
         it chooses a random connection."""
         while self.stop == False:
-            # initiate empty list to put unvisited connection
+            # initiate empty list to put unvisited connections
             choices = []
 
             # loop though all connections
@@ -137,10 +137,48 @@ class Train():
 
             # if there are no unvisited connections available
             if len(choices) == 0:
-                # choose a random connection
+                # get all connections of current station
                 all_conns = self.current_station.connect
-                next = random.choice(all_conns)
+                # set default length to high number
+                total_unvis_len = 200
+                # set counter to check for unvisited connections
+                unvis_counter = 0
+                # initiate empty list
+                unvis = []
+                # save best current connection which is None
+                best_conn = None
+                # loop through all possible connections
+                for conn in all_conns:
+                    # get the next station of the connection
+                    next = conn.get_other_station(self.current_station)
+                    # get all connections of next station
+                    all_conns_next = next.connect
+
+                    # loop through conns of next station
+                    for next_conn in all_conns_next:
+                        # if connection is not visited, add 1 to counter
+                        # and add the connection to the unvis list
+                        if not next_conn.is_visited():
+                            unvis.append(next_conn)
+                            unvis_counter += 1
+
+                    # save length of list with least amount of connections
+                    # and save the connection itself as the best connection
+                    if 0 < len(unvis) < total_unvis_len:
+                        total_unvis_len = len(unvis)
+                        best_conn = conn
+
+                # if counter is 0, stop trajectory
+                if unvis_counter == 0:
+                    self.stop == True
+                    # break out of while-loop
+                    break
+                # else, choose best_conn as next connection
+                else:
+                    next = best_conn
+
                 self.check_time(next)
+
             else:
                 # current station is set as station with minimal connections
                 min_con = None
@@ -164,8 +202,9 @@ class Train():
                     elif con_count == min_con:
                         random_choice = [next, connection]
                         next = random.choice(random_choice)
-        
+
                 self.check_time(next)
+
         self.current_station.visit()
 
     def check_time(self, connection: "Connection"):
