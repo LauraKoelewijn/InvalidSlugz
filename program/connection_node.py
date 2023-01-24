@@ -4,6 +4,7 @@ class Connection():
         self.s2 = s2
         self.time = time
         self.visited = False
+        self.times_visited = 0
 
     def is_visited(self):
         """Check if the current connection is visited"""
@@ -13,6 +14,14 @@ class Connection():
         """Set current connection as visited
         """
         self.visited = True
+        self.times_visited += 1
+    
+    def unvisit(self):
+        self.times_visited -= 1
+        if self.times_visited == 0:
+            self.visited = False
+        elif self.times_visited < 0:
+            raise ValueError("cannot visit connection negative times")
 
     def get_other_station(self, station):
         """ Gets the other station that is connected to the other station via this connection
@@ -31,5 +40,6 @@ class Connection():
         else:
             return False
     # 
-    # def __repr__(self):
+    def __repr__(self):
+        return f"{self.s1} & {self.s2}"
     #     return f"verbinding tussen {self.s1} en {self.s2} in {self.time} minuten"

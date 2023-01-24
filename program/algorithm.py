@@ -1,5 +1,6 @@
 from .network_graph import Network
 from .trajectory import Train
+from .hillclimber import climb_hill
 import csv
 
 def run(which_regions = 'holland', start = 'random'):
@@ -35,6 +36,7 @@ def run(which_regions = 'holland', start = 'random'):
             t.connect_with_used()
             # t.connect()
             trains.append(t.trajectory)
+            #print(t.object_traj)
             n.add_trajectory(t)
 
             # make good string representation without quotation marks
@@ -59,5 +61,7 @@ def run(which_regions = 'holland', start = 'random'):
         # put objective function into output file
         k = p*10000 - (t*100 + min)
         writer.writerow(["score", k])
+
+    climb_hill(n, 100, which_regions, start)
 
     return n, trains

@@ -3,7 +3,9 @@ from program.visualisation import visualize
 from program.baseline import hist
 from program.boxplot import boxplot
 
+from program.algorithm import run
 
+run()
 # create a network and run the algorithm
 # you can fill in 'nl' if you want to calculate trajectory for the whole netherlands
 # you can fill in 'min_con' if you want to start the trajectories at stations with minimal connections
@@ -18,4 +20,4 @@ from program.boxplot import boxplot
 
 # hist(1000)
 
-boxplot(100, 'nl')
+#boxplot(100, 'nl')

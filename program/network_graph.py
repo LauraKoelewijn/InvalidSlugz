@@ -103,8 +103,13 @@ class Network():
         return unvis
 
     def add_trajectory(self, train):
-        self.trajectories.append(train.trajectory)
+        #self.trajectories.append(train.object_traj)
+        self.trajectories.append(train)
         self.total_minutes += train.time 
+
+    def remove_trajectory(self, train):
+        self.trajectories.remove(train)
+        self.total_minutes -= train.time
 
     def calc_k(self):
         """calculates objective function for current network"""

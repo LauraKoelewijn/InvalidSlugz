@@ -9,6 +9,8 @@ class Train():
         self.stations = network
         self.name = name
         self.trajectory = []
+        self.object_traj = []
+        self.object_conns = []
         self.current_station = self.choose_first_station(start)
         self.stop = False
         self.time = 0
@@ -33,10 +35,14 @@ class Train():
                     min_con = con_count
                     first_station = choose_station
         elif start == 'random':
-            first_station = random.choice(available_stations)
+            try:
+                first_station = random.choice(available_stations)
+            except:
+                first_station = random.choice(list(self.stations.stations.values()))
 
         # add first station to trajectory list and set as visited
         self.trajectory.append(first_station.name)
+        self.object_traj.append(first_station)
         first_station.visit()
         return first_station
 
@@ -192,6 +198,8 @@ class Train():
 
         # add the next station to the trajectory list
         self.trajectory.append(other_station.name)
+        self.object_traj.append(other_station)
+        self.object_conns.append(connection)
 
         # set the current station and connection as visited
         self.current_station.visit()

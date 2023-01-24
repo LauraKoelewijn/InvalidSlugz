@@ -6,6 +6,7 @@ class Station():
         self.name: str = name
         self.connect: List["Connection"] = []
         self.visited: bool = False
+        self.times_visited = 0
         self.coord: Tuple[float] = [x, y]
 
     # adding connections to neighboring stations with time it takes to get there
@@ -15,6 +16,14 @@ class Station():
     # change bool showing that the station is visited
     def visit(self):
         self.visited = True
+        self.times_visited += 1
+    
+    def unvisit(self):
+        self.times_visited -= 1
+        if self.times_visited == 0:
+            self.visited = False
+        elif self.times_visited < 0:
+            raise ValueError("cannot visit station negative times")
 
     # check the status of the station if it is visited
     def is_visited(self):
