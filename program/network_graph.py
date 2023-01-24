@@ -8,6 +8,8 @@ class Network():
         self.stations: Dict[str, "Station"] = self.load_stations(source_file)
         self.connections = []
         self.load_conns(source_file_neighbours)
+        self.trajectories = []
+        self.total_minutes = 0
 
     # make nodes for every station with coordinates
     def load_stations(self, source_file):
@@ -100,6 +102,22 @@ class Network():
                 unvis.append(station)
         return unvis
 
+    def add_trajectory(self, train):
+        self.trajectories.append(train.trajectory)
+        self.total_minutes += train.time 
+
+    def calc_k(self):
+        """calculates objective function for current network"""
+        # 
+        total_connections = len(self.connections)
+        visited_connections = total_connections - len(self.check_connections())
+        p = visited_connections/total_connections
+        t = len(self.trajectories)
+
+        k = p*10000 - (t*100 + self.total_minutes)
+        return k
+
     # string representation of station names with connected information in station nodes
     def __repr__(self):
-        return f"{self.stations}"
+        #return f"{self.stations}"
+        return f"{self.trajectories}"
