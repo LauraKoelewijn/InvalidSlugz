@@ -31,10 +31,11 @@ def run(which_regions = 'holland', start = 'random'):
             t = Train(f'train_{train_number}', n, which_regions, start)
             # choose which algorithm to use
             # t.greedy_time()
-            t.greedy_conns()
-            # t.connect_with_used()
+            #t.greedy_conns()
+            t.connect_with_used()
             # t.connect()
             trains.append(t.trajectory)
+            n.add_trajectory(t)
 
             # make good string representation without quotation marks
             str_repr = f'[%s]' % ', '.join(map(str, t.trajectory))
