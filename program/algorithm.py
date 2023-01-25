@@ -62,6 +62,6 @@ def run(which_regions = 'holland', start = 'random'):
         k = p*10000 - (t*100 + min)
         writer.writerow(["score", k])
 
-    climb_hill(n, 100, which_regions, start)
+    # climb_hill(n, 100, which_regions, start)
 
     return n, trains

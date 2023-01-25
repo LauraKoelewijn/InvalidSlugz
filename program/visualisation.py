@@ -8,10 +8,10 @@ def visualize(network, trains, which_region = 'holland'):
 
     if which_region == 'nl':
         geo_json_file = 'data/nl_regions.geojson'
-        save_plot = 'output/holland_plot.png'
+        save_plot = 'output/nl_plot_con.png'
     elif which_region == 'holland':
         geo_json_file ='data/holland_regions.geojson'
-        save_plot = 'output/holland_plot.png'
+        save_plot = 'output/holland_plot_con.png'
     
     # intialize empty lists for the plotting
     names = []
@@ -77,9 +77,9 @@ def visualize(network, trains, which_region = 'holland'):
     x,y = zip(*coords)
     plt.scatter(x, y)
         
-    # add names of the stations to the points
-    for index, label in enumerate(names):
-        plt.annotate(label,(x[index], y[index]))
+    # # add names of the stations to the points
+    # for index, label in enumerate(names):
+    #     plt.annotate(label,(x[index], y[index]))
         
     # save plot
     plt.savefig(save_plot)
