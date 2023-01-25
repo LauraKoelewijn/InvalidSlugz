@@ -20,17 +20,17 @@ def visualize(network, trains, which_region = 'holland'):
     # load network_graph
     stations = network.stations.values()
 
-    img = plt.imread("data/map.png")
+    img = plt.imread("data/map_nl.png")
     fix, ax = plt.subplots()
-    ax.imshow(img, extent=[3.1, 7.5, 50.6, 53.7], aspect=1.7)
+    ax.imshow(img, extent=[3.1, 7.4, 50.62, 53.73], aspect=1.7)
 
-    # loading file of boarders of Holland
-    df_places = gpd.read_file(geo_json_file)
+    # # loading file of boarders of Holland
+    # df_places = gpd.read_file(geo_json_file)
 
-    # looping through regions in the data file and plotting them in a matplotlib graph
-    for polygon in df_places['geometry']:
-        x,y = polygon.exterior.xy
-        plt.plot(x,y, color = 'grey')
+    # # looping through regions in the data file and plotting them in a matplotlib graph
+    # for polygon in df_places['geometry']:
+    #     x,y = polygon.exterior.xy
+    #     plt.plot(x,y, color = 'grey')
 
     # PLOT ALL CONNECTIONS   
     # loop through all stations in the network_graph
@@ -50,7 +50,7 @@ def visualize(network, trains, which_region = 'holland'):
             y_line = [station.coord[1], other.coord[1]]
 
             # plot connections between all stations
-            plt.plot(x_line, y_line, color = 'black')
+            plt.plot(x_line, y_line, color = 'black', linestyle='--', dashes=(5, 2))
     
     #hide axes
     ax = plt.gca()
@@ -75,7 +75,7 @@ def visualize(network, trains, which_region = 'holland'):
 
     # unzip the tuples and plot them
     x,y = zip(*coords)
-    plt.scatter(x, y)
+    plt.scatter(x, y, zorder=10)
         
     # # add names of the stations to the points
     # for index, label in enumerate(names):

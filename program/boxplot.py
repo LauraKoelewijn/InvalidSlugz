@@ -26,17 +26,15 @@ def boxplot(iteration, which_regions = 'holland', start = 'random'):
         # k = run('greedy_time', which_regions, start)
         # k1 = run('greedy_conn', which_regions, start)
         # k2 = run('greedy_time', which_regions, start = 'min_con')
-        # k3 = run('greedy_conn', which_regions, start = 'min_con')
+        k1 = run('greedy_conn', which_regions, start = 'min_con')
 
         # k = run('connect', which_regions, start)
         # k1 = run('connect_with', which_regions, start)
         # k2 = run('connect', which_regions, start = 'min_con')
-        # k3 = run('connect_with', which_regions, start = 'min_con')
+        k = run('connect_with', which_regions, start = 'min_con')
 
-        k = run('greedy_time', which_regions, start)
-        k1 = run('greedy_conn', which_regions, start)
-        k2 = run('greedy_time', which_regions, start = 'min_con')
-        k3 = run('greedy_conn', which_regions, start = 'min_con')
+        k2 = run('hillclimber', which_regions, start)
+        # k1 = run('hillclimber', which_regions, start = 'min_con')
 
         # check if the output of the run is viable then append to initialised list
         if k != False:
@@ -52,30 +50,30 @@ def boxplot(iteration, which_regions = 'holland', start = 'random'):
             solutions2.append(k2)
             succes2 += 1
         
-        # check if the output of the run is viable then append to initialised list
-        if k3 != False:
-            solutions3.append(k3)
-            succes3 += 1
+        # # check if the output of the run is viable then append to initialised list
+        # if k3 != False:
+        #     solutions3.append(k3)
+        #     succes3 += 1
         
     # calculate the percentage of viable outputted solutions
     percentage_succes = (succes/iteration) * 100
     percentage_succes1 = (succes1/iteration) * 100
     percentage_succes2 = (succes2/iteration) * 100
-    percentage_succes3 = (succes3/iteration) * 100
+    # percentage_succes3 = (succes3/iteration) * 100
 
-    data = [solutions, solutions1]
+    data = [solutions, solutions1, solutions2]
 
     # Creating plot
     plt.boxplot(data, showmeans=True)
 
     # set title and axis descriptions
-    plt.title(f"Difference in objective function of Random vs Greedy algorithm, for {iteration} runs")
+    plt.title(f"Difference in objective function of Random, Greedy and Hillclimber algorithms, for {iteration} runs")
     plt.xlabel("Type algorithm")
     plt.ylabel("K values (objective function output)")
-    plt.xticks([1, 2], [f'Random algorithm\nRepetition +\nstart min con(valid solutions: {percentage_succes}%)', f'Greedy algorithm\nConnections +\nstart min con\n(valid solutions: {percentage_succes1}%)'])
+    plt.xticks([1, 2, 3], [f'Random +\nStart with min con\n(valid solutions: {percentage_succes}%)', f'Greedy +\nStart with min con\n(valid solutions: {percentage_succes1}%)', f'Hillclimber +\nStart with random station\n(valid solutions: {percentage_succes2}%)'])
 
     # save and show the histogram
-    plt.savefig('output/boxplot_random_vs_greedy_nl.png')
+    plt.savefig('output/boxplot_difference_nl.png')
     plt.show()
 
 def run(algorithm, which_regions = 'holland', start = 'random'):
