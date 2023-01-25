@@ -29,9 +29,6 @@ def boxplot(iteration, which_regions = 'holland', start = 'random'):
             solutions.append(k)
             succes += 1
     
-    # # calculate the percentage of viable outputted solutions
-    # percentage_succes = (succes/iteration) * 100
-    
     # run the random algorithm x number of times
     for j in range(iteration):
         k1 = run('greedy_conn', which_regions, start)
@@ -50,9 +47,6 @@ def boxplot(iteration, which_regions = 'holland', start = 'random'):
             solutions2.append(k2)
             succes2 += 1
     
-    # # calculate the percentage of viable outputted solutions
-    # percentage_succes = (succes/iteration) * 100
-    
     # run the random algorithm x number of times
     for m in range(iteration):
         k3 = run('greedy_conn', which_regions, start = 'min_con')
@@ -62,8 +56,11 @@ def boxplot(iteration, which_regions = 'holland', start = 'random'):
             solutions3.append(k3)
             succes3 += 1
     
-    # # calculate the percentage of viable outputted solutions
-    # percentage_succes1 = (succes1/iteration) * 100
+    # calculate the percentage of viable outputted solutions
+    percentage_succes = (succes/iteration) * 100
+    percentage_succes1 = (succes1/iteration) * 100
+    percentage_succes2 = (succes2/iteration) * 100
+    percentage_succes3 = (succes3/iteration) * 100
 
     data = [solutions, solutions1, solutions2, solutions3]
 
@@ -74,7 +71,7 @@ def boxplot(iteration, which_regions = 'holland', start = 'random'):
     # plt.title(f"Baseline functionality (valid solutions: {percentage_succes} %), {iteration} runs")
     plt.xlabel("Type algorithm")
     plt.ylabel("K values (objective function output)")
-    plt.xticks([1, 2, 3, 4], ['Time', 'Connections', 'Time + \nstart min con', 'Connections + \nstart min con'])
+    plt.xticks([1, 2, 3, 4], [f'Time\n(valid solutions: {percentage_succes})', f'Connections\n(valid solutions: {percentage_succes1})', f'Time +\nstart min con\n(valid solutions: {percentage_succes2})', f'Connections + \nstart min con\n(valid solutions: {percentage_succes3})'])
 
     # plt.axvline(mean(solutions), color = 'k', linestyle = 'dashed')
     # min_ylim, max_ylim = plt.ylim()
