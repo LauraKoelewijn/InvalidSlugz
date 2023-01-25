@@ -1,5 +1,6 @@
 from .network_graph import Network
 from .trajectory import Train
+from .hillclimber import climb_hill
 from statistics import mean
 
 import matplotlib.pyplot as plt
@@ -112,7 +113,7 @@ def run(algorithm, which_regions = 'holland', start = 'random'):
         
         if algorithm == 'connect':
             t.connect()
-        elif algorithm == 'connect_with':
+        elif algorithm == 'connect_with' or algorithm == 'hillclimber':
             t.connect_with_used()
         elif algorithm == 'greedy_time':
             t.greedy_time()
@@ -120,24 +121,30 @@ def run(algorithm, which_regions = 'holland', start = 'random'):
             t.greedy_conns()
         
         trains.append(t.trajectory)
+        n.add_trajectory(t)
 
-        # calculate values for the objective function
-        p_counter += t.station_counter
-        min += t.time
-        train_number += 1
-        if t.time > max_min:
-            max_min = t.time
+        if not algorithm == 'hillclimber:'
+            # calculate values for the objective function
+            p_counter += t.station_counter
+            min += t.time
+            train_number += 1
+            if t.time > max_min:
+                max_min = t.time
+
+    if algorithm == 'hillclimber':
+        k = climb_hill(n, 100, which_regions, start)
 
     # check if the solution is valid (if all stations have been visited)
     if len(n.check_stations()) != 0:
         return False
 
-    # calculate parameters for objective function
-    total_connections = len(n.connections)
-    visited_connections = total_connections - len(n.check_connections())
-    p = visited_connections/total_connections
-    t = train_number - 1
+    if not algorithm == 'hillclimber':
+        # calculate parameters for objective function
+        total_connections = len(n.connections)
+        visited_connections = total_connections - len(n.check_connections())
+        p = visited_connections/total_connections
+        t = train_number - 1
 
-    # calculate objective function and return its outcome
-    k = p*10000 - (t*100 + min)
+        # calculate objective function and return its outcome
+        k = p*10000 - (t*100 + min)
     return k
