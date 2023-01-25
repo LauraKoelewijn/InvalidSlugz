@@ -23,11 +23,11 @@ def climb_hill(network: "Network", iterations: int, which_regions: str, start: s
 
     # set starting colution to first best solution
     best_solution = network
-    print(f"starting at {best_solution.calc_k()}")
+    #print(f"starting at {best_solution.calc_k()}")
 
     # run hillclimber for given amount of iterations
     for i in range(iterations):
-        print(f"iteration {i}")
+        #print(f"iteration {i}")
         # copy the solution network
         network_copy = copy.deepcopy(best_solution)
 
@@ -57,13 +57,13 @@ def climb_hill(network: "Network", iterations: int, which_regions: str, start: s
         # keep best solution 
         if network_copy.calc_k() > best_solution.calc_k():
             best_solution = network_copy
-            print('changed')
+            #print('changed')
 
         # print current best solution 
-        print(f'BEST NOW: {best_solution.calc_k()}')
+        #print(f'BEST NOW: {best_solution.calc_k()}')
     
-    # return best solution
-    return best_solution    
+    # return k for best solution network
+    return best_solution.calc_k()    
            
             
 
