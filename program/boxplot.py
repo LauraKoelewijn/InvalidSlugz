@@ -69,6 +69,88 @@ def boxplot_eind(iteration, which_regions = 'nl', start = 'random'):
     plt.savefig('output/boxplot_difference_nl.png')
     plt.show()
 
+def boxplot_time(iteration, which_regions = 'nl', start = 'random'):
+    """Create a histogram of the baseline algorithm,
+        showing only the viable outputs"""
+
+    # initialise list for viable solutions
+    solutions = []
+    solutions1 = []
+
+    # run the random algorithm x number of times
+    for i in range(iteration):
+
+        k_greedy_time_long = run('greedy_time_long')
+        k_greedy_time_short = run('greedy_time_short')
+
+        # check if the output of the run is viable then append to initialised list
+        if k_greedy_time_long != False:
+            solutions.append(k_greedy_time_long)
+        
+        if k_greedy_time_short != False:
+            solutions1.append(k_greedy_time_short)
+        
+    data = [solutions, solutions1]
+
+    # Creating plot
+    plt.boxplot(data, showmeans=True)
+
+    # set title and axis descriptions
+    plt.title(f"Difference in objective function of Greedy time algorithms, for {iteration} runs")
+    plt.xlabel("Type algorithm")
+    plt.ylabel("K values (objective function output)")
+    plt.xticks([1, 2], [f'Greedy Time (Long)', f'Greedy Time (Short)'])
+
+    # save and show the histogram
+    plt.savefig('output/boxplot_difference_greedytime_nl.png')
+    plt.show()
+
+def boxplot_connections(iteration, which_regions = 'nl', start = 'random'):
+    """Create a histogram of the baseline algorithm,
+        showing only the viable outputs"""
+
+    # initialise list for viable solutions
+    solutions = []
+    solutions1 = []
+    solutions2 = []
+    solutions3 = []
+
+    # run the random algorithm x number of times
+    for i in range(iteration):
+
+        k_greedy_con_min = run('greedy_conn_min')
+        k_greedy_con_max = run('greedy_conn_max')
+        k_greedy_con_min_start = run('greedy_conn_min', 'nl', 'min_con')
+        k_greedy_con_max_start = run('greedy_conn_max','nl', 'min_con')
+
+        # check if the output of the run is viable then append to initialised list
+        if k_greedy_con_min != False:
+            solutions.append(k_greedy_con_min)
+        
+        if k_greedy_con_max != False:
+            solutions1.append(k_greedy_con_max)
+        
+        if k_greedy_con_min_start != False:
+            solutions2.append(k_greedy_con_min_start)
+        
+        if k_greedy_con_max_start != False:
+            solutions3.append(k_greedy_con_max_start)
+        
+    data = [solutions, solutions1, solutions2, solutions3]
+
+    # Creating plot
+    plt.boxplot(data, showmeans=True)
+
+    # set title and axis descriptions
+    plt.title(f"Difference in objective function of Greedy Connection algorithms, for {iteration} runs")
+    plt.xlabel("Type algorithm")
+    plt.ylabel("K values (objective function output)")
+    plt.xticks([1, 2, 3, 4], [f'Greedy Connection (Min)', f'Greedy Connection (Min)\nStart with min con', f'Greedy Connection (Max)', f'Greedy Connection (Max)\nStart with min con'])
+
+    # save and show the histogram
+    plt.savefig('output/boxplot_difference_greedyconn_nl.png')
+    plt.show()
+
 def lineplot(which_regions = 'nl', start = 'random'):
         # initialise list for viable solutions
 
@@ -129,10 +211,14 @@ def run(algorithm, which_regions = 'nl', start = 'random'):
             t.connect()
         elif algorithm == 'connect_with' or algorithm == 'hillclimber':
             t.connect_with_used()
-        elif algorithm == 'greedy_time':
-            t.greedy_time()
-        elif algorithm == 'greedy_conn':
-            t.greedy_conns()
+        elif algorithm == 'greedy_time_long':
+            t.greedy_time('long')
+        elif algorithm == 'greedy_time_short':
+            t.greedy_time('short')
+        elif algorithm == 'greedy_conn_min':
+            t.greedy_conns('min')
+        elif algorithm == 'greedy_conn_max':
+            t.greedy_conns('max')
         
         trains.append(t.trajectory)
         n.add_trajectory(t)

@@ -41,10 +41,14 @@ def climb_hill(just_hillclimb, iter_or_condstop: int, algorithm, which_regions: 
             t.connect()
         elif algorithm == 'connect_with':
             t.connect_with_used()
-        elif algorithm == 'greedy_time':
-            t.greedy_time()
-        elif algorithm == 'greedy_conn':
-            t.greedy_conns()
+        elif algorithm == 'greedy_time_long':
+            t.greedy_time('long')
+        elif algorithm == 'greedy_time_short':
+            t.greedy_time('short')
+        elif algorithm == 'greedy_conn_min':
+            t.greedy_conns('min')
+        elif algorithm == 'greedy_conn_max':
+            t.greedy_conns('max')
 
         network.add_trajectory(t)
         train_number += 1
@@ -113,11 +117,14 @@ def hill_step(best_solution: "Network", algorithm, which_regions, start):
         new_t.connect()
     elif algorithm == 'connect_with':
         new_t.connect_with_used()
-    elif algorithm == 'greedy_time':
-        new_t.greedy_time()
-    elif algorithm == 'greedy_conn':
-        new_t.greedy_conns()
-    network_copy.add_trajectory(new_t)
+    elif algorithm == 'greedy_time_long':
+        new_t.greedy_time('long')
+    elif algorithm == 'greedy_time_short':
+        new_t.greedy_time('short')
+    elif algorithm == 'greedy_conn_min':
+        new_t.greedy_conns('min')
+    elif algorithm == 'greedy_conn_max':
+        new_t.greedy_conns('max')
 
     # keep best solution 
     if network_copy.calc_k() > best_solution.calc_k():
