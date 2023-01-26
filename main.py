@@ -2,9 +2,7 @@ from program.algorithm import run
 from program.visualisation import visualize
 from program.baseline import hist
 from program.hillclimber import climb_hill, random_restart
-#from program.boxplot import boxplot
-
-from program.algorithm import run
+from program.boxplot import boxplot_eind, lineplot
 
 #run('nl')
 # # create a network and run the algorithm
@@ -27,7 +25,8 @@ from program.algorithm import run
 # hill = climb_hill(False, 50, 'connect_with')
 # print(hill.calc_k())
 
-random_restart(100, 50, 'greedy_conn', 'nl', 'min_con')
+# random_restart(100, 50, 'greedy_conn', 'nl', 'min_con')
 # hist(1000)
 
-#boxplot(1000, 'nl')
+# boxplot_eind(10)
+lineplot()

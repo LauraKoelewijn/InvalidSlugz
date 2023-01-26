@@ -1,11 +1,11 @@
 from .network_graph import Network
 from .trajectory import Train
-from .hillclimber import climb_hill
+from .hillclimber import climb_hill, random_restart
 from statistics import mean
 
 import matplotlib.pyplot as plt
 
-def boxplot(iteration, which_regions = 'holland', start = 'random'):
+def boxplot_eind(iteration, which_regions = 'nl', start = 'random'):
     """Create a histogram of the baseline algorithm,
         showing only the viable outputs"""
 
@@ -14,54 +14,47 @@ def boxplot(iteration, which_regions = 'holland', start = 'random'):
     solutions1 = []
     solutions2 = []
     solutions3 = []
-
-    # initialise counter of number of succesful runs
-    succes = 0
-    succes1 = 0
-    succes2 = 0
-    succes3 = 0
+    solutions4 = []
 
     # run the random algorithm x number of times
     for i in range(iteration):
-        # k = run('greedy_time', which_regions, start)
-        # k1 = run('greedy_conn', which_regions, start)
-        # k2 = run('greedy_time', which_regions, start = 'min_con')
-        k1 = run('greedy_conn', which_regions, start = 'min_con')
 
-        # k = run('connect', which_regions, start)
-        # k1 = run('connect_with', which_regions, start)
-        # k2 = run('connect', which_regions, start = 'min_con')
-        k = run('connect_with', which_regions, start = 'min_con')
+        k_random = run('connect_with')
+        k_greedy_time = run('greedy_time')
+        k_greedy_conn = run('greedy_conn')
 
-        k2 = run('hillclimber', which_regions, start)
-        # k1 = run('hillclimber', which_regions, start = 'min_con')
+        hill = climb_hill(False, 100, 'connect_with')
+        k_hill = hill.calc_k()
+        
+        random = random_restart(100, 50, 'greedy_conn')
+        k_restart = random.calc_k()
+
+        print(f'rand {k_random}')
+        print(f'time {k_greedy_time}')
+        print(f'con {k_greedy_conn}')
+        print(f'hill {k_hill}')
+        print(f'restart {k_restart}')
 
         # check if the output of the run is viable then append to initialised list
-        if k != False:
-            solutions.append(k)
-            succes += 1
+        if k_random != False:
+            solutions.append(k_random)
         
-        if k1 != False:
-            solutions1.append(k1)
-            succes1 += 1
+        if k_greedy_time != False:
+            solutions1.append(k_greedy_time)
         
         # check if the output of the run is viable then append to initialised list
-        if k2 != False:
-            solutions2.append(k2)
-            succes2 += 1
+        if k_greedy_conn != False:
+            solutions2.append(k_greedy_conn)
         
-        # # check if the output of the run is viable then append to initialised list
-        # if k3 != False:
-        #     solutions3.append(k3)
-        #     succes3 += 1
+        # check if the output of the run is viable then append to initialised list
+        if k_hill != False:
+            solutions3.append(k_hill)
         
-    # calculate the percentage of viable outputted solutions
-    percentage_succes = (succes/iteration) * 100
-    percentage_succes1 = (succes1/iteration) * 100
-    percentage_succes2 = (succes2/iteration) * 100
-    # percentage_succes3 = (succes3/iteration) * 100
+        # check if the output of the run is viable then append to initialised list
+        if k_restart != False:
+            solutions4.append(k_restart)
 
-    data = [solutions, solutions1, solutions2]
+    data = [solutions, solutions1, solutions2, solutions3, solutions4]
 
     # Creating plot
     plt.boxplot(data, showmeans=True)
@@ -70,13 +63,40 @@ def boxplot(iteration, which_regions = 'holland', start = 'random'):
     plt.title(f"Difference in objective function of Random, Greedy and Hillclimber algorithms, for {iteration} runs")
     plt.xlabel("Type algorithm")
     plt.ylabel("K values (objective function output)")
-    plt.xticks([1, 2, 3], [f'Random +\nStart with min con\n(valid solutions: {percentage_succes}%)', f'Greedy +\nStart with min con\n(valid solutions: {percentage_succes1}%)', f'Hillclimber +\nStart with random station\n(valid solutions: {percentage_succes2}%)'])
+    plt.xticks([1, 2, 3, 4, 5], [f'Random', f'Greedy Time', f'Greedy Connection', f'Hillclimber', f'Hillclimber Restart'])
 
     # save and show the histogram
     plt.savefig('output/boxplot_difference_nl.png')
     plt.show()
 
-def run(algorithm, which_regions = 'holland', start = 'random'):
+def lineplot(which_regions = 'nl', start = 'random'):
+        # initialise list for viable solutions
+
+    hill_random = climb_hill(True, 10000, 'connect_with')
+    k_random = hill_random[1]
+
+    hill_greedy_time = climb_hill(True, 10000, 'greedy_time')
+    k_greedy_time = hill_greedy_time[1]
+
+    hill_greedy_conn = climb_hill(True, 10000, 'greedy_conn')
+    k_greedy_conn = hill_greedy_conn[1]  
+
+    # print(k_random)
+    # print(k_greedy_time)
+    # print(k_greedy_conn)
+
+    fig, ax = plt.subplots()
+    ax.plot(k_random, label = 'Random')
+    ax.plot(k_greedy_time, label = 'Greedy Time')
+    ax.plot(k_greedy_conn, label = 'Greedy Conn')
+
+    ax.legend()
+
+    # save and show the histogram
+    plt.savefig('output/lineplot_difference_nl.png')
+    plt.show()
+
+def run(algorithm, which_regions = 'nl', start = 'random'):
     """run the random algorithm and return a objective function output
             or a bool, showing that it is not a viable output"""
 
@@ -117,29 +137,24 @@ def run(algorithm, which_regions = 'holland', start = 'random'):
         trains.append(t.trajectory)
         n.add_trajectory(t)
 
-        if not algorithm == 'hillclimber':
-            # calculate values for the objective function
-            p_counter += t.station_counter
-            min += t.time
-            train_number += 1
-            if t.time > max_min:
-                max_min = t.time
-
-    if algorithm == 'hillclimber':
-        k = climb_hill(n, 100, which_regions, start)
+        # calculate values for the objective function
+        p_counter += t.station_counter
+        min += t.time
+        train_number += 1
+        if t.time > max_min:
+            max_min = t.time
 
     # check if the solution is valid (if all stations have been visited)
     if len(n.check_stations()) != 0:
         return False
 
-    if not algorithm == 'hillclimber':
-        # calculate parameters for objective function
-        total_connections = len(n.connections)
-        visited_connections = total_connections - len(n.check_connections())
-        p = visited_connections/total_connections
-        t = train_number - 1
+    # calculate parameters for objective function
+    total_connections = len(n.connections)
+    visited_connections = total_connections - len(n.check_connections())
+    p = visited_connections/total_connections
+    t = train_number - 1
 
-        # calculate objective function and return its outcome
-        k = p*10000 - (t*100 + min)
+    # calculate objective function and return its outcome
+    k = p*10000 - (t*100 + min)
     
     return k
