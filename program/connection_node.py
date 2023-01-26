@@ -41,5 +41,5 @@ class Connection():
             return False
     #
     def __repr__(self):
-        return f"{self.s1} & {self.s2} in {self.time} minuten"
+        return f"{self.s1} & {self.s2}"
     #     return f"verbinding tussen {self.s1} en {self.s2} in {self.time} minuten"
