@@ -24,16 +24,17 @@ class Train():
                 available_stations.append(station)
 
         if start == 'min_con':
-            min_con = None
-            for choose_station in available_stations:
-                con_count = len(choose_station.connect)
+            min_con = len(self.stations.stations.values())
+            if len(available_stations) > 0:
+                for choose_station in available_stations:
+                    con_count = len(choose_station.connect)
 
-                if min_con == None:
-                    min_con = con_count
-                    first_station = choose_station
-                elif con_count < min_con:
-                    min_con = con_count
-                    first_station = choose_station
+                    if con_count < min_con:
+                        min_con = con_count
+                        first_station = choose_station
+            else:
+                first_station = random.choice(list(self.stations.stations.values()))            
+
         elif start == 'random':
             try:
                 first_station = random.choice(available_stations)
