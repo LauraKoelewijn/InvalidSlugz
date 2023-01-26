@@ -33,7 +33,7 @@ class Train():
                         min_con = con_count
                         first_station = choose_station
             else:
-                first_station = random.choice(list(self.stations.stations.values()))            
+                first_station = random.choice(list(self.stations.stations.values()))
 
         elif start == 'random':
             try:
@@ -94,11 +94,13 @@ class Train():
                 self.check_time(next)
         self.current_station.visit()
 
-    def greedy_time(self):
+    def greedy_time(self, time):
         """Moves current train to nearest possible stations by choosing
-        the connection with the lowest time, until all possible connections
-        are visited. If there are no unvisited connections, it chooses
-        a random connection."""
+        the connection with the lowest or highest time depending on "time":
+        if time == 'short' it chooses the shortest connections,
+        if time == 'long' it chooses the longest connections.
+        Stops when time is up. If there are no unvisited connections, it
+        chooses a random connection."""
         while self.stop == False:
             # initiate empty list to put unvisited connections
             choices = []
@@ -116,14 +118,21 @@ class Train():
                 next = random.choice(all_conns)
                 self.check_time(next)
             else:
-                # sort choices list from least amount of minute to the most
-                choices.sort(key=lambda x: x.time, reverse=False)
-                # return new sorted list
-                sorted_choices = sorted(choices, key=lambda x: x.time, reverse=False)
+                if time == 'short':
+                    # sort choices list from least amount of minute to the most
+                    choices.sort(key=lambda x: x.time, reverse=False)
+                    # return new sorted list
+                    sorted_choices = sorted(choices, key=lambda x: x.time, reverse=False)
+                elif time == 'long':
+                    # sort choices list from most amount of minute to the least
+                    choices.sort(key=lambda x: x.time, reverse=True)
+                    # return new sorted list
+                    sorted_choices = sorted(choices, key=lambda x: x.time, reverse=True)
                 # pick first connection of the list, which is the shortest
                 next = sorted_choices[0]
                 # if the connection has been visited before, remove from the list
                 self.check_time(next)
+
 
         self.current_station.visit()
 
