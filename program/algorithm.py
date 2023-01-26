@@ -31,7 +31,7 @@ def run(which_regions = 'holland', start = 'random'):
         while len(n.check_stations()) > 0 and train_number <= traj_num:
             t = Train(f'train_{train_number}', n, which_regions, start)
             # choose which algorithm to use
-            # t.greedy_time()
+            # t.greedy_time('short') # choose between time == 'long' or time == 'short'
             t.greedy_conns()
             # t.connect_with_used()
             # t.connect()
@@ -63,6 +63,6 @@ def run(which_regions = 'holland', start = 'random'):
         writer.writerow(["score", k])
 
     #climb_hill(n, 1000, which_regions, start)
-    random_restart(n, 1500, which_regions, start)
+    # random_restart(n, 1500, which_regions, start)
 
     return n, trains

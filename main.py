@@ -1,10 +1,4 @@
-from program.algorithm import run
-from program.visualisation import visualize
-from program.baseline import hist
-from program.hillclimber import climb_hill, random_restart
-from program.boxplot import boxplot_eind, lineplot
-
-#run('nl')
+# run('nl')
 # # create a network and run the algorithm
 # # you can fill in 'nl' if you want to calculate trajectory for the whole netherlands
 # # you can fill in 'min_con' if you want to start the trajectories at stations with minimal connections

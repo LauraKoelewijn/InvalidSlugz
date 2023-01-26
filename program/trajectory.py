@@ -33,7 +33,7 @@ class Train():
                         min_con = con_count
                         first_station = choose_station
             else:
-                first_station = random.choice(list(self.stations.stations.values()))            
+                first_station = random.choice(list(self.stations.stations.values()))
 
         elif start == 'random':
             try:
@@ -94,11 +94,12 @@ class Train():
                 self.check_time(next)
         self.current_station.visit()
 
-    def greedy_time(self):
+    def greedy_time(self, time):
         """Moves current train to nearest possible stations by choosing
-        the connection with the lowest time, until all possible connections
-        are visited. If there are no unvisited connections, it chooses
-        a random connection."""
+        the connection with the lowest or highest time depending on the
+        'short' or 'long' time parameter.
+        Stops when time is up. If there are no unvisited connections, it
+        chooses a random connection."""
         while self.stop == False:
             # initiate empty list to put unvisited connections
             choices = []
@@ -116,22 +117,32 @@ class Train():
                 next = random.choice(all_conns)
                 self.check_time(next)
             else:
-                # sort choices list from least amount of minute to the most
-                choices.sort(key=lambda x: x.time, reverse=False)
-                # return new sorted list
-                sorted_choices = sorted(choices, key=lambda x: x.time, reverse=False)
+                if time == 'short':
+                    # sort choices list from least amount of minute to the most
+                    choices.sort(key=lambda x: x.time, reverse=False)
+                    # return new sorted list
+                    sorted_choices = sorted(choices, key=lambda x: x.time, reverse=False)
+                elif time == 'long':
+                    # sort choices list from most amount of minute to the least
+                    choices.sort(key=lambda x: x.time, reverse=True)
+                    # return new sorted list
+                    sorted_choices = sorted(choices, key=lambda x: x.time, reverse=True)
                 # pick first connection of the list, which is the shortest
                 next = sorted_choices[0]
                 # if the connection has been visited before, remove from the list
                 self.check_time(next)
 
+
         self.current_station.visit()
 
     def greedy_conns(self):
-        """Moves current train to next possible stations by choosing
-        the station that holds the least amount of connections, until all
+        """Moves current train to next possible station by choosing
+        the station that holds the least or the most amount of connections,
+        depending on the 'least' or 'most' amount parameter, until all
         possible connections are visited. If there are no unvisited connections,
-        it chooses a random connection."""
+        it uses lookahead to look at connections of next possible stations.
+        If there are still unvisited connections, it moves train to the
+        corresponding station with the least amount of unvisited connections."""
         while self.stop == False:
             # initiate empty list to put unvisited connections
             choices = []
@@ -189,6 +200,8 @@ class Train():
             else:
                 # current station is set as station with minimal connections
                 min_con = None
+                # empty list
+                equals = []
                 # loop through list with stations
                 for connection in choices:
                     # get the station that is connected with each connection
@@ -196,22 +209,27 @@ class Train():
                     # save the connection count of every station
                     con_count = len(station.connect)
 
+                    # if there is no min_con yet, current station is set as min_con
                     if min_con == None:
                         min_con = con_count
-                        next = connection
+                        equals.append(connection)
                     # if the connection count is less than the connection count of current station
                     # with minimal connections, set new connection as next
                     elif con_count < min_con:
                         min_con = con_count
-                        next = connection
+                        # empty the list
+                        equals = []
+                        equals.append(connection)
 
-                    # probleem voor later, bias kiest de middelste optie het vaakst
+                    # if con_count of current station is equal to current
+                    # min_con, append to list
                     elif con_count == min_con:
-                        random_choice = [next, connection]
-                        next = random.choice(random_choice)
+                        equals.append(connection)
 
+                # choose next station randomly from list
+                next = random.choice(equals)
                 self.check_time(next)
-
+                
         self.current_station.visit()
 
     def check_time(self, connection: "Connection"):
