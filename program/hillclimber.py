@@ -20,13 +20,16 @@ def climb_hill(network: "Network", iterations: int, which_regions: str, start: s
     Returns:
         Network: a the network with the best solution found
     """
-
+    stop_cond = 50
+    check_stop = 0
     # set starting colution to first best solution
     best_solution = network
-    #print(f"starting at {best_solution.calc_k()}")
+    #print(f"starting at {best_solution.calc_k()} for {which_regions}")
 
     # run hillclimber for given amount of iterations
-    for i in range(iterations):
+    go = True
+    #for i in range(iterations):
+    while go:    
         #print(f"iteration {i}")
         # copy the solution network
         network_copy = copy.deepcopy(best_solution)
@@ -57,15 +60,34 @@ def climb_hill(network: "Network", iterations: int, which_regions: str, start: s
         # keep best solution 
         if network_copy.calc_k() > best_solution.calc_k():
             best_solution = network_copy
+            check_stop = 0
             #print('changed')
+        else:
+            check_stop += 1
 
         # print current best solution 
         #print(f'BEST NOW: {best_solution.calc_k()}')
+        if check_stop >= stop_cond:
+            go = False
     
     # return k for best solution network
-    return best_solution.calc_k()    
+    return best_solution  
            
-            
+
+def random_restart(n: "Network", iterations: int, which_regions: str, start: str):
+    # save best solution out of all restarts
+    print(which_regions)
+    best_sol = n
+    print(f'starting at: {best_sol.calc_k()}')
+
+    for i in range(iterations):
+        new_sol = climb_hill(n, 100, which_regions, start)
+
+        if new_sol.calc_k() > best_sol.calc_k():
+            best_sol = new_sol
+            print(best_sol.calc_k())
+
+    return best_sol
 
 
 

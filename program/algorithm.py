@@ -1,6 +1,6 @@
 from .network_graph import Network
 from .trajectory import Train
-from .hillclimber import climb_hill
+from .hillclimber import climb_hill, random_restart
 import csv
 
 def run(which_regions = 'holland', start = 'random'):
@@ -62,6 +62,7 @@ def run(which_regions = 'holland', start = 'random'):
         k = p*10000 - (t*100 + min)
         writer.writerow(["score", k])
 
-    climb_hill(n, 100, which_regions, start)
+    #climb_hill(n, 1000, which_regions, start)
+    random_restart(n, 1500, which_regions, start)
 
     return n, trains
