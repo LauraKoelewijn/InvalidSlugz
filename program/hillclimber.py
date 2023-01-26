@@ -76,7 +76,6 @@ def climb_hill(network: "Network", iterations: int, which_regions: str, start: s
 
 def random_restart(n: "Network", iterations: int, which_regions: str, start: str):
     # save best solution out of all restarts
-    print(which_regions)
     best_sol = n
     print(f'starting at: {best_sol.calc_k()}')
 
