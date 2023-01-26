@@ -15,7 +15,7 @@ class Connection():
         """
         self.visited = True
         self.times_visited += 1
-    
+
     def unvisit(self):
         self.times_visited -= 1
         if self.times_visited == 0:
@@ -39,7 +39,7 @@ class Connection():
             return self.s1
         else:
             return False
-    # 
+    #
     def __repr__(self):
         return f"{self.s1} & {self.s2}"
     #     return f"verbinding tussen {self.s1} en {self.s2} in {self.time} minuten"
