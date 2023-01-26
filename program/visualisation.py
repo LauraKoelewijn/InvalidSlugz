@@ -82,7 +82,7 @@ def visualize(network, trains, which_region = 'holland'):
     #     plt.annotate(label,(x[index], y[index]))
         
     # save plot
-    plt.savefig(save_plot)
+    plt.savefig(save_plot, dpi = 500)
 
     # show the whole plot
     plt.show()
