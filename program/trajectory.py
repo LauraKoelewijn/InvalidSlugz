@@ -157,8 +157,8 @@ class Train():
             if len(choices) == 0:
                 # get all connections of current station
                 all_conns = self.current_station.connect
-                # set default min length to high number
-                min_unvis_len = 200
+                # set default min length to length of all connections
+                min_unvis_len = len(self.stations.stations.values())
                 # set default max length to low number
                 max_unvis_len = 0
                 # set counter to check for unvisited connections
