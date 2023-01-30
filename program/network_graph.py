@@ -5,14 +5,14 @@
 #   Meike Klunder, Laura Koelewijn & Sacha Gijsbers
 #
 #   Implements the graph that holds all station and connection data
-#   The class can give the unvisited stations and connections, 
+#   The class can give the unvisited stations and connections,
 #       trajectories can be added and removed
 #       and the k_value can be calculated.
 
 # import classes
 from .station_node import Station
 from .connection_node import Connection
-from ..algorithms.trajectory import Train
+from .trajectory import Train
 
 # import type hints
 from typing import Dict, List
@@ -28,22 +28,22 @@ class Network():
 
         # Place to save solution trajectories
         self.trajectories: List[Train] = []
-        self.total_minutes: float = 0
+        self.total_minutes = 0
 
     # make nodes for every station with coordinates
     def load_stations(self, source_file: str) -> Dict[str, Station]:
-        """ Loads the data from given file name into the self.stations dictionary. 
+        """ Loads the data from given file name into the self.stations dictionary.
 
         Args:
             source_file (str): the name of the data file for the stations
                 must be in data repository, so data/[source_file].csv.
 
         Returns:
-            Dict[str, Station]: a dictionary with the 
+            Dict[str, Station]: a dictionary with the
                 station names and station class instances
         """
         # initiate dict to fill with station nodes
-        station_dict: Dict[str, Station] = {}
+        station_dict = {}
 
         # open the given file
         with open(source_file, 'r') as f:
@@ -77,8 +77,7 @@ class Network():
             List: list of stations in the file
         """
         # initiate list to fill with connection class instances
-        conn_list: List[Connection] = []
-
+        conn_list = []
         # open the ConnectiesHolland file
         with open(source_file_neighbours, 'r') as f:
             # skip first line
@@ -90,7 +89,7 @@ class Network():
                 if not line:
                     break
 
-                # split the lines into the two stations 
+                # split the lines into the two stations
                 # and the time it takes between them
                 splitline = line.split(",")
 
@@ -104,7 +103,7 @@ class Network():
                 # node representation of the two stations
                 station_node1 = self.stations[station1]
                 station_node2 = self.stations[station2]
-                
+
                 # make connection instance
                 connection = Connection(station_node1, station_node2, distance)
 
@@ -121,8 +120,7 @@ class Network():
             List["Connection"]: a list with all the unvisited connections
         """
         # initialize empty list for unvisited connections
-        unvis: List[Connection] = []
-
+        unvis = []
         # loop though all connections
         for conn in self.connections:
             # if the connection has not been visited yet, add to the list
@@ -137,8 +135,7 @@ class Network():
             List["Station"]: a list with all the unvisited connections
         """
         # initialize empty list for unvisited stations
-        unvis: List[Station] = []
-
+        unvis = []
         # loop though all stations
         for station in self.stations.values():
             # if the station has not been visited yet, add to the list
@@ -157,7 +154,7 @@ class Network():
         self.trajectories.append(train)
 
         # add trajectory's monutes to the total minutes
-        self.total_minutes += train.time 
+        self.total_minutes += train.time
 
     def remove_trajectory(self, train: Train):
         """ Removes given trajectory from the network.

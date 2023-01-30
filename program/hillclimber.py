@@ -1,10 +1,9 @@
 from .trajectory import Train
-from ..representation.network_graph import Network
+from .network_graph import Network
 
 import copy
 import random
-from typing import List
- 
+
 def climb_hill(just_hillclimb, iter_or_condstop: int, algorithm, which_regions: str = 'nl', start: str  = 'random'):
     """Funtion that executes the hillclimber algorithm.
         It takes a network with al already produced solution,
@@ -24,13 +23,13 @@ def climb_hill(just_hillclimb, iter_or_condstop: int, algorithm, which_regions: 
 
     if which_regions == 'nl':
         traj_num = 20
-        data_stations = 'data/case_data/StationsNationaal.csv'
-        data_connections = 'data/case_data/ConnectiesNationaal.csv'
+        data_stations = 'data/StationsNationaal.csv'
+        data_connections = 'data/ConnectiesNationaal.csv'
     elif which_regions == 'holland':
         traj_num = 7
-        data_stations = 'data/case_data/StationsHolland.csv'
-        data_connections = 'data/case_data/ConnectiesHolland.csv'
-    
+        data_stations = 'data/StationsHolland.csv'
+        data_connections = 'data/ConnectiesHolland.csv'
+
     network = Network(data_stations, data_connections)
 
     # make the trains/trajectories
@@ -85,14 +84,14 @@ def climb_hill(just_hillclimb, iter_or_condstop: int, algorithm, which_regions: 
             else:
                 list_solutions.append(best_solution.calc_k())
                 check_stop += 1
-            
-            # print current best solution 
+
+            # print current best solution
             # print(f'BEST NOW: {best_solution.calc_k()}')
             if check_stop >= iter_or_condstop:
                 go = False
-    
+
     # return k for best solution network
-    return best_solution, list_solutions  
+    return best_solution, list_solutions
 
 def hill_step(best_solution: "Network", algorithm, which_regions, start):
     # copy the solution network
@@ -108,7 +107,7 @@ def hill_step(best_solution: "Network", algorithm, which_regions, start):
     for station in stations:
         station.unvisit()
 
-    # delete chosen trajectory from the solution        
+    # delete chosen trajectory from the solution
     network_copy.remove_trajectory(rand_traj)
 
     # make a new trajectory
@@ -127,7 +126,7 @@ def hill_step(best_solution: "Network", algorithm, which_regions, start):
     elif algorithm == 'greedy_conn_max':
         new_t.greedy_conns('max')
 
-    # keep best solution 
+    # keep best solution
     if network_copy.calc_k() > best_solution.calc_k():
         best_solution = network_copy
         return best_solution
@@ -139,16 +138,16 @@ def random_restart(iterations: int, stop_after: int, algorithm: str, which_regio
     # print(which_regions)
 
     if which_regions == 'nl':
-        data_stations = 'data/case_data/StationsNationaal.csv'
-        data_connections = 'data/case_data/ConnectiesNationaal.csv'
+        data_stations = 'data/StationsNationaal.csv'
+        data_connections = 'data/ConnectiesNationaal.csv'
     elif which_regions == 'holland':
-        data_stations = 'data/case_data/StationsHolland.csv'
-        data_connections = 'data/case_data/ConnectiesHolland.csv'
+        data_stations = 'data/StationsHolland.csv'
+        data_connections = 'data/ConnectiesHolland.csv'
 
     best_sol = Network(data_stations, data_connections)
     # print(f'starting at: {best_sol.calc_k()}')
 
-    long_list: List[float] = []
+    long_list = []
 
     for i in range(iterations):
         new = climb_hill(False, stop_after, algorithm, which_regions, start)
@@ -157,13 +156,8 @@ def random_restart(iterations: int, stop_after: int, algorithm: str, which_regio
         if new_sol.calc_k() > best_sol.calc_k():
             best_sol = new_sol
             # print(best_sol.calc_k())
-        
+
         list_hill = new[1]
         long_list = long_list + list_hill.calc_k()
 
     return best_sol, long_list
-
-
-
-
-    

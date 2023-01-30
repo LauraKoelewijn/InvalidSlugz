@@ -11,7 +11,7 @@
 from .connection_node import Connection
 
 # import type hints
-from typing import Dict, List
+from typing import Dict, Tuple, List
 
 class Station():
     """ A class that holds the information for a station object:
@@ -24,9 +24,9 @@ class Station():
         self.name: str = name
         self.connect: List["Connection"] = []
         self.visited: bool = False
-        self.coord: List[float] = [x, y]
+        self.coord: Tuple[float] = [x, y]
         self.times_visited: int = 0
-        
+
     def add_conn(self, connection: "Connection") -> None:
         """ Adds the given connection to this station.
 
@@ -41,7 +41,7 @@ class Station():
         """
         self.visited = True
         self.times_visited += 1
-    
+
     def unvisit(self):
         """ Undoes the visit() function
 
@@ -62,3 +62,11 @@ class Station():
             bool: whether the station has been visited
         """
         return self.visited
+
+    def __repr__(self) -> str:
+        """ Gives the string representation of the station
+
+        Returns:
+            str: the name of the station
+        """
+        return f"Station {self.name}\n."
