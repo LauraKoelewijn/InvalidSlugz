@@ -1,6 +1,6 @@
-from .network_graph import Network
-from .trajectory import Train
-from .hillclimber import climb_hill, random_restart
+from ..representation.network_graph import Network
+from ..algorithms.trajectory import Train
+from ..algorithms.hillclimber import climb_hill, random_restart
 from statistics import mean
 
 import matplotlib.pyplot as plt
@@ -184,12 +184,12 @@ def run(algorithm, which_regions = 'nl', start = 'random'):
 
     if which_regions == 'nl':
         traj_num = 20
-        data_stations = 'data/StationsNationaal.csv'
-        data_connections = 'data/ConnectiesNationaal.csv'
+        data_stations = 'data/case_data/StationsNationaal.csv'
+        data_connections = 'data/case_data/ConnectiesNationaal.csv'
     elif which_regions == 'holland':
         traj_num = 7
-        data_stations = 'data/StationsHolland.csv'
-        data_connections = 'data/ConnectiesHolland.csv'
+        data_stations = 'data/case_data/StationsHolland.csv'
+        data_connections = 'data/case_data/ConnectiesHolland.csv'
 
     # initialise an empty list of trajectories
     trains = []
