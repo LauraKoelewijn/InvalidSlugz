@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+from typing import List
 
 from ..representation.network_graph import Network
 
@@ -10,9 +11,8 @@ def visualize(network, trains, which_region = 'holland'):
     elif which_region == 'holland':
         save_plot = 'output/holland_plot_con.png'
     
-    # intialize empty lists for the plotting
-    names = []
-    coords = []
+    # intialize empty list of coordinates for plotting
+    coords: List[List[float]] = []
 
     # load network_graph
     stations = network.stations.values()
@@ -30,7 +30,6 @@ def visualize(network, trains, which_region = 'holland'):
     # loop through all stations in the network_graph
     for station in stations:
         # add station name and coordinates to the lists
-        names.append(station.name)
         coords.append(station.coord)
 
         # load connections for this station
@@ -55,8 +54,9 @@ def visualize(network, trains, which_region = 'holland'):
     # loop through all the trajectories
     for traj in trains:
         # initiate empty lists for the coordinates
-        x_traj = []
-        y_traj = []
+        x_traj: List[float] = []
+        y_traj: List[float] = []
+
         # loop through the trajectory
         for station_name in traj:
             # save coordinates of every station in the trajectory
