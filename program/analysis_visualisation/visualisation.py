@@ -2,6 +2,8 @@ import matplotlib.pyplot as plt
 
 from ..representation.network_graph import Network
 
+import matplotlib.transforms as mtrans
+
 def visualize(network, trains, which_region = 'holland'):
 
     # check if wanted map is of holland of nl and change save option
@@ -44,7 +46,7 @@ def visualize(network, trains, which_region = 'holland'):
             y_line = [station.coord[1], other.coord[1]]
 
             # plot connections between all stations
-            plt.plot(x_line, y_line, color = 'black', linestyle='--', dashes=(5, 2))
+            # plt.plot(x_line, y_line, color = 'grey', linestyle='--')
     
     #hide axes
     ax = plt.gca()
@@ -53,7 +55,8 @@ def visualize(network, trains, which_region = 'holland'):
 
     # PLOT TRAJECTORIES
     # loop through all the trajectories
-    for traj in trains:
+    
+    for i, traj in enumerate(trains):
         # initiate empty lists for the coordinates
         x_traj = []
         y_traj = []
@@ -65,7 +68,7 @@ def visualize(network, trains, which_region = 'holland'):
             x_traj.append(station_coords[0])
             y_traj.append(station_coords[1])
         # plot the trajectory
-        plt.plot(x_traj, y_traj)
+        plt.plot(x_traj, y_traj, transform=mtrans.offset_copy(ax.transData, fig=fix, x=(i-3)*0.005, y=(i-3)*0.005))
 
     # unzip the tuples and plot them
     x,y = zip(*coords)

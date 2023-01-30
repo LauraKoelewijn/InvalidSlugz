@@ -3,17 +3,39 @@ from .algorithms.trajectory import Train
 from .algorithms.hillclimber import climb_hill, random_restart
 import csv
 
+def write_to_csv(network):
+    # open a new csv file to write the solution in
+    with open('output/solution.csv', 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile, delimiter = ',')
+
+        # write the header
+        header = ["train", "stations"]
+        writer.writerow(header)
+        
+        # loop through the trajectories saved in the network
+        for train in network.trajectories:
+            # make good string representation without quotation marks
+            str_repr = f'[%s]' % ', '.join(map(str, train.trajectory))
+
+            # write the name and stations of the train to the output file
+            writer.writerow([train.name, str_repr])
+
+        # calculate and add k-value
+        k = network.calc_k()
+        writer.writerow(["score", k])
+
+
 def run(which_regions = 'holland', start = 'random'):
     trains = []
 
     if which_regions == 'nl':
         traj_num = 20
-        data_stations = 'data/StationsNationaal.csv'
-        data_connections = 'data/ConnectiesNationaal.csv'
+        data_stations = 'data/case_data/StationsNationaal.csv'
+        data_connections = 'data/case_data/ConnectiesNationaal.csv'
     elif which_regions == 'holland':
         traj_num = 7
-        data_stations = 'data/StationsHolland.csv'
-        data_connections = 'data/ConnectiesHolland.csv'
+        data_stations = 'data/case_data/StationsHolland.csv'
+        data_connections = 'data/case_data/ConnectiesHolland.csv'
 
     with open('output/output.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter = ',')
@@ -22,8 +44,8 @@ def run(which_regions = 'holland', start = 'random'):
 
         n = Network(data_stations, data_connections)
 
-        p_counter = 0
-        min = 0
+        # p_counter = 0
+        # min = 0
         max_min = 0
 
         # make the trains/trajectories
@@ -44,22 +66,23 @@ def run(which_regions = 'holland', start = 'random'):
 
             # write the name and stations of the train to the output file
             writer.writerow([t.name, str_repr])
-            p_counter += t.station_counter
-            min += t.time
+            # p_counter += t.station_counter
+            # min += t.time
             train_number += 1
             if t.time > max_min:
                 max_min = t.time
 
         print(max_min)
 
-        # calculate parameters for objective function
-        total_connections = len(n.connections)
-        visited_connections = total_connections - len(n.check_connections())
-        p = visited_connections/total_connections
-        t = train_number - 1
+        # # calculate parameters for objective function
+        # total_connections = len(n.connections)
+        # visited_connections = total_connections - len(n.check_connections())
+        # p = visited_connections/total_connections
+        # t = train_number - 1
 
-        # put objective function into output file
-        k = p*10000 - (t*100 + min)
+        # # put objective function into output file
+        # k = p*10000 - (t*100 + min)
+        k = n.calc_k()
         writer.writerow(["score", k])
 
     #climb_hill(n, 1000, which_regions, start)

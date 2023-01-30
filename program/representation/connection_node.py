@@ -7,6 +7,10 @@
 #   Implements the connection node that holds data for the connections between stations.
 #   Connections can be (un)visited and
 #       when one station is known, the other station at this connection can be requested
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .station_node import Station # type: ignore
 
 class Connection():
     """ A class that holds the data for a connection:
@@ -14,9 +18,9 @@ class Connection():
         - the time between those stations
         - if it's been visited
     """
-    def __init__(self, s1, s2, time: float):
-        self.s1 = s1
-        self.s2 = s2
+    def __init__(self, s1: 'Station', s2: 'Station', time: float):
+        self.s1: 'Station' = s1
+        self.s2: 'Station' = s2
         self.time: float = time
         self.visited: bool = False
         self.times_visited: int = 0
@@ -49,7 +53,7 @@ class Connection():
         elif self.times_visited < 0:
             raise ValueError("cannot visit connection negative times")
 
-    def get_other_station(self, station):
+    def get_other_station(self, station: 'Station'):
         """ Gets the station that is connected to the given station
                 via this connection
 

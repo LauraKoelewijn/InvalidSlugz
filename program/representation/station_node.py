@@ -8,7 +8,7 @@
 #   Stations can be (un)visited and connections can be added.
 
 # import classes
-from .connection_node import Connection
+from .connection_node import Connection 
 
 # import type hints
 from typing import Dict, List

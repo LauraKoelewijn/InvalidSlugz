@@ -1,4 +1,4 @@
-from program.algorithm import run
+from program.algorithm import run, write_to_csv
 from program.analysis_visualisation.visualisation import visualize
 from program.analysis_visualisation.background_map import make_map
 from program.analysis_visualisation.baseline import hist
@@ -9,16 +9,16 @@ from program.analysis_visualisation.boxplot import boxplot_eind, lineplot, boxpl
 # create a network and run the algorithm
 # you can fill in 'nl' if you want to calculate trajectory for the whole netherlands
 # you can fill in 'min_con' if you want to start the trajectories at stations with minimal connections
-# data_tuple = run('nl')
+data_tuple = run('nl')
 
-# # save data from the run
-# n = data_tuple[0]
-# trains = data_tuple[1]
+# save data from the run
+n = data_tuple[0]
+trains = data_tuple[1]
 
-# # visualize the data
+# visualize the data
 # if background map is needed plot it here
 # make_map()
-# visualize(n, trains, 'nl')
+visualize(n, trains, 'nl')
 
 # hill = climb_hill(False, 50, 'connect_with')
 # print(hill.calc_k())
@@ -29,5 +29,5 @@ from program.analysis_visualisation.boxplot import boxplot_eind, lineplot, boxpl
 # boxplot_eind(10)
 # lineplot()
 
-# boxplot_time(1000)
-# boxplot_connections(1000)
+# boxplot_time(100)
+#boxplot_connections(1000)
