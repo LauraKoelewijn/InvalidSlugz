@@ -1,5 +1,5 @@
-from .network_graph import Network
-from .trajectory import Train
+from ..representation.network_graph import Network
+from ..algorithms.trajectory import Train
 from statistics import mean
 
 import matplotlib.pyplot as plt

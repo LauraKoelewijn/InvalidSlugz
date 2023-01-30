@@ -1,4 +1,4 @@
-from .connection_node import Connection
+from ..representation.connection_node import Connection
 import random
 import copy
 

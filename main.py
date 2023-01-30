@@ -1,8 +1,8 @@
 from program.algorithm import run
-from program.visualisation import visualize
-from program.baseline import hist
-from program.hillclimber import climb_hill, random_restart
-from program.boxplot import boxplot_eind, lineplot, boxplot_time, boxplot_connections
+from program.analysis_visualisation.visualisation import visualize
+from program.analysis_visualisation.baseline import hist
+from program.algorithms.hillclimber import climb_hill, random_restart
+from program.analysis_visualisation.boxplot import boxplot_eind, lineplot, boxplot_time, boxplot_connections
 
 # run()
 # create a network and run the algorithm
@@ -27,4 +27,4 @@ from program.boxplot import boxplot_eind, lineplot, boxplot_time, boxplot_connec
 # lineplot()
 
 # boxplot_time(1000)
-boxplot_connections(1000)
+# boxplot_connections(1000)

@@ -1,16 +1,13 @@
 import matplotlib.pyplot as plt
-import geopandas as gpd
-from matplotlib.pyplot import figure
 
-from .network_graph import Network
+from ..representation.network_graph import Network
 
 def visualize(network, trains, which_region = 'holland'):
 
+    # check if wanted map is of holland of nl and change save option
     if which_region == 'nl':
-        geo_json_file = 'data/nl_regions.geojson'
         save_plot = 'output/nl_plot_con.png'
     elif which_region == 'holland':
-        geo_json_file ='data/holland_regions.geojson'
         save_plot = 'output/holland_plot_con.png'
     
     # intialize empty lists for the plotting
@@ -20,17 +17,14 @@ def visualize(network, trains, which_region = 'holland'):
     # load network_graph
     stations = network.stations.values()
 
+    # load the map picture
     img = plt.imread("data/map_nl.png")
+
+    # initialise subplots
     fix, ax = plt.subplots()
+
+    # set map as background plot of specific size
     ax.imshow(img, extent=[3.1, 7.4, 50.62, 53.73], aspect=1.7)
-
-    # # loading file of boarders of Holland
-    # df_places = gpd.read_file(geo_json_file)
-
-    # # looping through regions in the data file and plotting them in a matplotlib graph
-    # for polygon in df_places['geometry']:
-    #     x,y = polygon.exterior.xy
-    #     plt.plot(x,y, color = 'grey')
 
     # PLOT ALL CONNECTIONS   
     # loop through all stations in the network_graph
