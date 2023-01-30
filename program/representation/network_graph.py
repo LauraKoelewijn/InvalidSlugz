@@ -9,7 +9,7 @@
 # import classes
 from .station_node import Station
 from .connection_node import Connection
-from .trajectory import Train
+from ..algorithms.trajectory import Train
 
 # import type hints
 from typing import Dict, List

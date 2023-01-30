@@ -1,5 +1,5 @@
 from .trajectory import Train
-from .network_graph import Network
+from ..representation.network_graph import Network
 
 import copy
 import random

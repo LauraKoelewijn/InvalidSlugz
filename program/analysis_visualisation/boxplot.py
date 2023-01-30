@@ -1,6 +1,6 @@
-from .network_graph import Network
-from .trajectory import Train
-from .hillclimber import climb_hill, random_restart
+from ..representation.network_graph import Network
+from ..algorithms.trajectory import Train
+from ..algorithms.hillclimber import climb_hill, random_restart
 from statistics import mean
 
 import matplotlib.pyplot as plt
