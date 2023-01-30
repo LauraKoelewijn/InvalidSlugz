@@ -3,6 +3,7 @@ from ..representation.network_graph import Network
 
 import copy
 import random
+from typing import List
  
 def climb_hill(just_hillclimb, iter_or_condstop: int, algorithm, which_regions: str = 'nl', start: str  = 'random'):
     """Funtion that executes the hillclimber algorithm.
@@ -147,7 +148,7 @@ def random_restart(iterations: int, stop_after: int, algorithm: str, which_regio
     best_sol = Network(data_stations, data_connections)
     # print(f'starting at: {best_sol.calc_k()}')
 
-    long_list = []
+    long_list: List[float] = []
 
     for i in range(iterations):
         new = climb_hill(False, stop_after, algorithm, which_regions, start)
