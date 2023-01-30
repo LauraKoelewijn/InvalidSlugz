@@ -5,6 +5,9 @@
 #   Meike Klunder, Laura Koelewijn & Sacha Gijsbers
 #
 #   Implements the graph that holds all station and connection data
+#   The class can give the unvisited stations and connections, 
+#       trajectories can be added and removed
+#       and the k_value can be calculated.
 
 # import classes
 from .station_node import Station
@@ -36,7 +39,8 @@ class Network():
                 must be in data repository, so data/[source_file].csv.
 
         Returns:
-            Dict[str, Station]: a dictionary with the station names and station class instances
+            Dict[str, Station]: a dictionary with the 
+                station names and station class instances
         """
         # initiate dict to fill with station nodes
         station_dict = {}
@@ -85,7 +89,8 @@ class Network():
                 if not line:
                     break
 
-                # split the lines into the two stations and the time it takes between them
+                # split the lines into the two stations 
+                # and the time it takes between them
                 splitline = line.split(",")
 
                 splitline[-1] = splitline[-1].strip()
