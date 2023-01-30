@@ -1,3 +1,12 @@
+#   station_node.py
+#
+#   Minor programmeren - Algoritmen en Heuristieken
+#   RailNL case
+#   Meike Klunder, Laura Koelewijn & Sacha Gijsbers
+#
+#   Implements the station node that holds data for the station objects.
+#   Stations can be (un)visited and connections can be added.
+
 # import classes
 from .connection_node import Connection
 

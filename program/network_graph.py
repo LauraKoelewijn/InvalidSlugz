@@ -5,6 +5,9 @@
 #   Meike Klunder, Laura Koelewijn & Sacha Gijsbers
 #
 #   Implements the graph that holds all station and connection data
+#   The class can give the unvisited stations and connections, 
+#       trajectories can be added and removed
+#       and the k_value can be calculated.
 
 # import classes
 from .station_node import Station
