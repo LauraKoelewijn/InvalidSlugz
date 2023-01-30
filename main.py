@@ -1,5 +1,6 @@
 from program.algorithm import run
 from program.analysis_visualisation.visualisation import visualize
+from program.analysis_visualisation.background_map import make_map
 from program.analysis_visualisation.baseline import hist
 from program.algorithms.hillclimber import climb_hill, random_restart
 from program.analysis_visualisation.boxplot import boxplot_eind, lineplot, boxplot_time, boxplot_connections
@@ -15,6 +16,8 @@ from program.analysis_visualisation.boxplot import boxplot_eind, lineplot, boxpl
 # trains = data_tuple[1]
 
 # # visualize the data
+# if background map is needed plot it here
+# make_map()
 # visualize(n, trains, 'nl')
 
 # hill = climb_hill(False, 50, 'connect_with')

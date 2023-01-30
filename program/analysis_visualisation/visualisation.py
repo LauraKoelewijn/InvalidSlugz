@@ -17,8 +17,8 @@ def visualize(network, trains, which_region = 'holland'):
     # load network_graph
     stations = network.stations.values()
 
-    # load the map picture
-    img = plt.imread("data/map_nl.png")
+    # load the map picture, choose which basemap to use
+    img = plt.imread("data/background/map_nl.png")
 
     # initialise subplots
     fix, ax = plt.subplots()
