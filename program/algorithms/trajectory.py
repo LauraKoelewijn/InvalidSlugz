@@ -13,13 +13,13 @@ class Train():
         self.which_region = which_region
         self.stations = network
         self.name = name
-        self.trajectory = []
-        self.object_traj = []
-        self.object_conns = []
-        self.current_station = self.choose_first_station(start)
-        self.stop = False
-        self.time = 0
-        self.station_counter = 0
+        self.trajectory: List[str] = []
+        self.object_traj: List["Station"] = []
+        self.object_conns: List["Connection"] = []
+        self.current_station: "Station" = self.choose_first_station(start)
+        self.stop: bool = False
+        self.time: float = 0
+        self.station_counter: int = 0
 
     def choose_first_station(self, start: str) -> "Station":
         """Chooses the first station randomly from the list of
@@ -31,7 +31,7 @@ class Train():
         Returns:
             first_station: a Station object.
         """
-        available_stations: List = []
+        available_stations: List["Station"] = []
         for station in self.stations.stations.values():
             if not station.visited:
                 available_stations.append(station)
@@ -67,7 +67,7 @@ class Train():
         are visited."""
         while self.stop == False:
             # initiate empty list to put unvisited connection
-            choices: List = []
+            choices: List["Connection"] = []
             # loop though all connections
             for connection in self.current_station.connect:
                 # if the connection hasn't been visited before, add to the list
@@ -94,7 +94,7 @@ class Train():
         whether visited or not."""
         while self.stop == False:
             # initiate empty list to put unvisited connection
-            choices: List = []
+            choices: List["Connection"] = []
 
             # loop though all connections
             for connection in self.current_station.connect:
@@ -128,7 +128,7 @@ class Train():
         """
         while self.stop == False:
             # initiate empty list to put unvisited connections
-            choices: List = []
+            choices: List["Connection"] = []
 
             # loop though all connections
             for connection in self.current_station.connect:
@@ -177,7 +177,7 @@ class Train():
         """
         while self.stop == False:
             # initiate empty list to put unvisited connections
-            choices: List = []
+            choices: List["Connection"] = []
 
             # loop though all connections
             for connection in self.current_station.connect:
@@ -245,7 +245,7 @@ class Train():
                 # current station is set as station with best amount of connections
                 best_con = None
                 # empty list
-                equals: List = []
+                equals: List["Connection"] = []
                 # loop through list with stations
                 for connection in choices:
                     # get the station that is connected with each connection
