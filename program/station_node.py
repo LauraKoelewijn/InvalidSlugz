@@ -62,11 +62,3 @@ class Station():
             bool: whether the station has been visited
         """
         return self.visited
-
-    def __repr__(self) -> str:
-        """ Gives the string representation of the station
-
-        Returns:
-            str: the name of the station
-        """
-        return f"Station {self.name}\n."
