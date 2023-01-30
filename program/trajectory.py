@@ -3,7 +3,11 @@ import random
 import copy
 
 class Train():
-    """Representation of a trajectory"""
+    """A class representation of a trajectory.
+    Holds the information about the trajectory.
+    Can choose the first station of a trajectory and then connect it to
+    a next station by using one of our four algorithm functions. Also keeps
+    track of the time of a trajectory."""
     def __init__(self, name, network, which_region = 'holland', start = 'random'):
         self.which_region = which_region
         self.stations = network
@@ -17,7 +21,15 @@ class Train():
         self.station_counter = 0
 
     def choose_first_station(self, start):
-        """Chooses the first station randomly from the list of unvisited connections"""
+        """Chooses the first station randomly from the list of
+        unvisited connections.
+
+        Args:
+            start (str): random or min_con
+
+        Returns:
+            first_station: a Station object.
+        """
         available_stations = []
         for station in self.stations.stations.values():
             if not station.visited:
@@ -48,8 +60,10 @@ class Train():
         return first_station
 
     def connect(self):
-        """Moves the current train to new possible connections
-            until all possible connections are visited"""
+        """Chooses a random connection from a list of possible and unvisited
+        connections. Moves the current train over these connections
+        until all possible connections are visited. Stops when all connections
+        are visited."""
         while self.stop == False:
             # initiate empty list to put unvisited connection
             choices = []
@@ -72,6 +86,11 @@ class Train():
         self.current_station.visit()
 
     def connect_with_used(self):
+        """Chooses a random connection from a list of possible and unvisited
+        connections. Moves the current train over these connections
+        until all possible connections are visited. When all connections are
+        visited, it chooses a random connection out of all connections,
+        whether visited or not."""
         while self.stop == False:
             # initiate empty list to put unvisited connection
             choices = []
@@ -97,9 +116,15 @@ class Train():
     def greedy_time(self, time):
         """Moves current train to nearest possible stations by choosing
         the connection with the lowest or highest time depending on the
-        'short' or 'long' time parameter.
+        'short' or 'long' time arg.
         Stops when time is up. If there are no unvisited connections, it
-        chooses a random connection."""
+        chooses a random connection.
+
+        Args:
+            time (str): 'short' or 'long' depending on which algorithm
+            to use; connecting with the shortest or longest connections.
+
+        """
         while self.stop == False:
             # initiate empty list to put unvisited connections
             choices = []
@@ -138,11 +163,17 @@ class Train():
     def greedy_conns(self, amount):
         """Moves current train to next possible station by choosing
         the station that holds the least or the most amount of connections,
-        depending on the 'min' or 'max' amount parameter, until all
+        depending on the 'min' or 'max' amount arg, until all
         possible connections are visited. If there are no unvisited connections,
         it uses lookahead to look at connections of next possible stations.
         If there are still unvisited connections, it moves train to the
-        corresponding station with the least amount of unvisited connections."""
+        corresponding station with the least amount of unvisited connections.
+
+        Args:
+            amount (str): 'min' or 'max' depending on which algorithm
+            to use; connecting with the max or min amount of connections.
+
+        """
         while self.stop == False:
             # initiate empty list to put unvisited connections
             choices = []
@@ -250,9 +281,15 @@ class Train():
         self.current_station.visit()
 
     def check_time(self, connection: "Connection"):
+        """Checks if requested map is of North- and South-Holland or of the
+        Netherlands. Changes the amount of minutes the train may ride
+        accordingly.
+        Keeps track of the total time of the trajectory.
 
-        # check if requested map is of holland or the whole nl
-        # and change the amount of minutes the train may ride accordingly
+        Args:
+            connections (Connection): a connection object.
+
+        """
         if self.which_region == 'nl':
             max_time = 180
         elif self.which_region == 'holland':
@@ -267,7 +304,13 @@ class Train():
             self.stop = True
 
     def add_station(self, connection: "Connection"):
-        """Follows the chosen connection and adds the next station to the trajectory"""
+        """Follows the chosen connection and adds the next
+        station to the trajectory.
+
+        Args:
+            connections (Connection): a connection object.
+
+        """
         # get the next station
         other_station = connection.get_other_station(self.current_station)
 
@@ -283,6 +326,3 @@ class Train():
         # move to the next station
         self.current_station = other_station
         self.station_counter += 1
-
-    def __repr__(self):
-        return f"{self.name} visits {self.trajectory} in {self.time} minutes."
