@@ -28,7 +28,7 @@ class Network():
 
         # Place to save solution trajectories
         self.trajectories: List[Train] = []
-        self.total_minutes = 0
+        self.total_minutes: float = 0
 
     # make nodes for every station with coordinates
     def load_stations(self, source_file: str) -> Dict[str, Station]:
@@ -43,7 +43,7 @@ class Network():
                 station names and station class instances
         """
         # initiate dict to fill with station nodes
-        station_dict = {}
+        station_dict: Dict[str, Station] = {}
 
         # open the given file
         with open(source_file, 'r') as f:
@@ -77,7 +77,8 @@ class Network():
             List: list of stations in the file
         """
         # initiate list to fill with connection class instances
-        conn_list = []
+        conn_list: List[Connection] = []
+
         # open the ConnectiesHolland file
         with open(source_file_neighbours, 'r') as f:
             # skip first line
@@ -120,7 +121,8 @@ class Network():
             List["Connection"]: a list with all the unvisited connections
         """
         # initialize empty list for unvisited connections
-        unvis = []
+        unvis: List[Connection] = []
+
         # loop though all connections
         for conn in self.connections:
             # if the connection has not been visited yet, add to the list
@@ -135,7 +137,8 @@ class Network():
             List["Station"]: a list with all the unvisited connections
         """
         # initialize empty list for unvisited stations
-        unvis = []
+        unvis: List[Station] = []
+
         # loop though all stations
         for station in self.stations.values():
             # if the station has not been visited yet, add to the list

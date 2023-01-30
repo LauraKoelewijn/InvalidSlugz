@@ -11,7 +11,7 @@
 from .connection_node import Connection
 
 # import type hints
-from typing import Dict, Tuple, List
+from typing import Dict, List
 
 class Station():
     """ A class that holds the information for a station object:
@@ -24,7 +24,7 @@ class Station():
         self.name: str = name
         self.connect: List["Connection"] = []
         self.visited: bool = False
-        self.coord: Tuple[float] = [x, y]
+        self.coord: List[float] = [x, y]
         self.times_visited: int = 0
         
     def add_conn(self, connection: "Connection") -> None:
