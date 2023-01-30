@@ -36,7 +36,8 @@ class Network():
                 must be in data repository, so data/[source_file].csv.
 
         Returns:
-            Dict[str, Station]: a dictionary with the station names and station class instances
+            Dict[str, Station]: a dictionary with the 
+                station names and station class instances
         """
         # initiate dict to fill with station nodes
         station_dict = {}
@@ -85,7 +86,8 @@ class Network():
                 if not line:
                     break
 
-                # split the lines into the two stations and the time it takes between them
+                # split the lines into the two stations 
+                # and the time it takes between them
                 splitline = line.split(",")
 
                 splitline[-1] = splitline[-1].strip()
