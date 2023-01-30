@@ -23,12 +23,12 @@ def climb_hill(just_hillclimb, iter_or_condstop: int, algorithm, which_regions: 
 
     if which_regions == 'nl':
         traj_num = 20
-        data_stations = 'data/StationsNationaal.csv'
-        data_connections = 'data/ConnectiesNationaal.csv'
+        data_stations = 'data/case_data/StationsNationaal.csv'
+        data_connections = 'data/case_data/ConnectiesNationaal.csv'
     elif which_regions == 'holland':
         traj_num = 7
-        data_stations = 'data/StationsHolland.csv'
-        data_connections = 'data/ConnectiesHolland.csv'
+        data_stations = 'data/case_data/StationsHolland.csv'
+        data_connections = 'data/case_data/ConnectiesHolland.csv'
     
     network = Network(data_stations, data_connections)
 
@@ -138,11 +138,11 @@ def random_restart(iterations: int, stop_after: int, algorithm: str, which_regio
     # print(which_regions)
 
     if which_regions == 'nl':
-        data_stations = 'data/StationsNationaal.csv'
-        data_connections = 'data/ConnectiesNationaal.csv'
+        data_stations = 'data/case_data/StationsNationaal.csv'
+        data_connections = 'data/case_data/ConnectiesNationaal.csv'
     elif which_regions == 'holland':
-        data_stations = 'data/StationsHolland.csv'
-        data_connections = 'data/ConnectiesHolland.csv'
+        data_stations = 'data/case_data/StationsHolland.csv'
+        data_connections = 'data/case_data/ConnectiesHolland.csv'
 
     best_sol = Network(data_stations, data_connections)
     # print(f'starting at: {best_sol.calc_k()}')
