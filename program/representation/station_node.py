@@ -7,11 +7,14 @@
 #   Implements the station node that holds data for the station objects.
 #   Stations can be (un)visited and connections can be added.
 
+from typing import TYPE_CHECKING
+
 # import classes
-from .connection_node import Connection 
+if TYPE_CHECKING:
+    from .connection_node import Connection # type: ignore
 
 # import type hints
-from typing import Dict, List
+from typing import List
 
 class Station():
     """ A class that holds the information for a station object:
@@ -22,12 +25,12 @@ class Station():
     """
     def __init__(self, name: str, x: float, y: float) -> None:
         self.name: str = name
-        self.connect: List["Connection"] = []
+        self.connect: List['Connection'] = []
         self.visited: bool = False
         self.coord: List[float] = [x, y]
         self.times_visited: int = 0
         
-    def add_conn(self, connection: "Connection") -> None:
+    def add_conn(self, connection: 'Connection') -> None:
         """ Adds the given connection to this station.
 
         Args:
@@ -36,13 +39,13 @@ class Station():
         self.connect.append(connection)
 
     # change bool showing that the station is visited
-    def visit(self):
+    def visit(self) -> None:
         """ Keeps track if and how many times this station has been visited
         """
         self.visited = True
         self.times_visited += 1
     
-    def unvisit(self):
+    def unvisit(self) -> None:
         """ Undoes the visit() function
 
         Raises:

@@ -10,9 +10,9 @@
 #       and the k_value can be calculated.
 
 # import classes
-from .station_node import Station
-from .connection_node import Connection
-from ..algorithms.trajectory import Train
+from .station_node import Station # type: ignore
+from .connection_node import Connection # type: ignore
+from ..algorithms.trajectory import Train # type: ignore
 
 # import type hints
 from typing import Dict, List
@@ -21,7 +21,7 @@ class Network():
     """ A network class that holds the Graph with all connections and stations. 
         Also holds a solution trajecotry.
     """
-    def __init__(self, source_file, source_file_neighbours):
+    def __init__(self, source_file: str, source_file_neighbours: str) -> None:
         # take land data and load into the graph
         self.stations: Dict[str, Station] = self.load_stations(source_file)
         self.connections: List[Connection] = self.load_conns(source_file_neighbours)
@@ -69,8 +69,7 @@ class Network():
                 station_dict[station] = Station(station, x, y)
         return station_dict
 
-
-    def load_conns(self, source_file_neighbours: str):
+    def load_conns(self, source_file_neighbours: str) -> List[Connection]:
         """ Loads the data from given file name into the self.connections list
 
         Returns:
@@ -146,7 +145,7 @@ class Network():
                 unvis.append(station)
         return unvis
 
-    def add_trajectory(self, train: Train):
+    def add_trajectory(self, train: Train) -> None:
         """ Adds a given trajectory to to the network.
             Updates the trajectories list and the total minutes
 
@@ -159,7 +158,7 @@ class Network():
         # add trajectory's monutes to the total minutes
         self.total_minutes += train.time 
 
-    def remove_trajectory(self, train: Train):
+    def remove_trajectory(self, train: Train) -> None:
         """ Removes given trajectory from the network.
             Updates the trajectories list and total minutes
 

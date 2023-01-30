@@ -1,8 +1,8 @@
-import matplotlib.pyplot as plt
-import geopandas as gpd
-import contextily as cx
+import matplotlib.pyplot as plt # type: ignore
+import geopandas as gpd # type: ignore
+import contextily as cx # type: ignore
 
-def make_map():
+def make_map() -> None:
     # load map description set to nl
     df = gpd.read_file('data/geo_data/nl_regions.geojson')
 

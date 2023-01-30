@@ -1,11 +1,11 @@
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt # type: ignore
 from typing import List
 
-from ..representation.network_graph import Network
+# from ..representation.network_graph import Network
 
-import matplotlib.transforms as mtrans
+import matplotlib.transforms as mtrans # type: ignore
 
-def visualize(network, trains, which_region = 'holland'):
+def visualize(network, trains, which_region = 'holland') -> None:
 
     # check if wanted map is of holland of nl and change save option
     if which_region == 'nl':

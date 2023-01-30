@@ -1,6 +1,6 @@
 from ..representation.connection_node import Connection
+
 import random
-import copy
 from typing import List
 
 class Train():

@@ -1,18 +1,19 @@
-from ..representation.network_graph import Network
-from ..algorithms.trajectory import Train
-from statistics import mean
+from ..representation.network_graph import Network # type: ignore
+from ..algorithms.trajectory import Train # type: ignore
+from statistics import mean # type: ignore
 
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt # type: ignore
+from typing import List, Union
 
-def hist(iteration, which_regions = 'holland', start = 'random'):
+def hist(iteration: int, which_regions: str = 'holland', start: str = 'random') -> None:
     """Create a histogram of the baseline algorithm,
         showing only the viable outputs"""
 
     # initialise list for viable solutions
-    solutions = []
+    solutions: List[float] = []
 
     # initialise counter of number of succesful runs
-    succes = 0
+    succes: int = 0
 
     # run the random algorithm x number of times
     for i in range(iteration):
@@ -43,7 +44,7 @@ def hist(iteration, which_regions = 'holland', start = 'random'):
     plt.savefig('output/baseline_hist_no_bias.png')
     plt.show()
 
-def run(which_regions = 'holland', start = 'random'):
+def run(which_regions: str = 'holland', start: str = 'random') -> Union[float, bool]:
     """run the random algorithm and return a objective function output
             or a bool, showing that it is not a viable output"""
 
@@ -57,7 +58,7 @@ def run(which_regions = 'holland', start = 'random'):
         data_connections = 'data/case_data/ConnectiesHolland.csv'
 
     # initialise an empty list of trajectories
-    trains = []
+    trains: List[List[str]] = []
 
     # create a network
     n = Network(data_stations, data_connections)

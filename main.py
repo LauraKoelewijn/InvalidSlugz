@@ -9,19 +9,20 @@ from program.analysis_visualisation.boxplot import boxplot_eind, lineplot, boxpl
 # create a network and run the algorithm
 # you can fill in 'nl' if you want to calculate trajectory for the whole netherlands
 # you can fill in 'min_con' if you want to start the trajectories at stations with minimal connections
-data_tuple = run('nl')
+# data_tuple = run('nl')
 
-# save data from the run
-n = data_tuple[0]
-trains = data_tuple[1]
+# # save data from the run
+# n = data_tuple[0]
+# trains = data_tuple[1]
 
-# visualize the data
-# if background map is needed plot it here
-# make_map()
-visualize(n, trains, 'nl')
+# # visualize the data
+# # if background map is needed plot it here
+# # make_map()
+# visualize(n, trains, 'nl')
 
-# hill = climb_hill(False, 50, 'connect_with')
-# print(hill.calc_k())
+hill = climb_hill(True, 50, 'greedy_conn_max', 'holland')
+hill_best = hill[0]
+print(hill_best.calc_k())
 
 # random_restart(100, 50, 'greedy_conn', 'nl', 'min_con')
 # hist(1000)

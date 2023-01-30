@@ -1,20 +1,21 @@
-from ..representation.network_graph import Network
-from ..algorithms.trajectory import Train
-from ..algorithms.hillclimber import climb_hill, random_restart
+from ..representation.network_graph import Network # type: ignore
+from ..algorithms.trajectory import Train # type: ignore
+from ..algorithms.hillclimber import climb_hill, random_restart # type: ignore
 from statistics import mean
 
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt # type: ignore
+from typing import Union, List
 
-def boxplot_eind(iteration, which_regions = 'nl', start = 'random'):
+def boxplot_eind(iteration: int, which_regions: str = 'nl', start: str = 'random') -> None:
     """Create a histogram of the baseline algorithm,
         showing only the viable outputs"""
 
     # initialise list for viable solutions
-    solutions = []
-    solutions1 = []
-    solutions2 = []
-    solutions3 = []
-    solutions4 = []
+    solutions: List[float] = []
+    solutions1: List[float] = []
+    solutions2: List[float] = []
+    solutions3: List[float] = []
+    solutions4: List[float] = []
 
     # run the random algorithm x number of times
     for i in range(iteration):
@@ -69,13 +70,13 @@ def boxplot_eind(iteration, which_regions = 'nl', start = 'random'):
     plt.savefig('output/boxplot_difference_nl.png')
     plt.show()
 
-def boxplot_time(iteration, which_regions = 'nl', start = 'random'):
+def boxplot_time(iteration: int, which_regions: str = 'nl', start: str = 'random') -> None:
     """Create a histogram of the baseline algorithm,
         showing only the viable outputs"""
 
     # initialise list for viable solutions
-    solutions = []
-    solutions1 = []
+    solutions: List[float] = []
+    solutions1: List[float] = []
 
     # run the random algorithm x number of times
     for i in range(iteration):
@@ -105,15 +106,15 @@ def boxplot_time(iteration, which_regions = 'nl', start = 'random'):
     plt.savefig('output/boxplot_difference_greedytime_nl.png')
     plt.show()
 
-def boxplot_connections(iteration, which_regions = 'nl', start = 'random'):
+def boxplot_connections(iteration: int, which_regions: str = 'nl', start: str = 'random') -> None:
     """Create a histogram of the baseline algorithm,
         showing only the viable outputs"""
 
     # initialise list for viable solutions
-    solutions = []
-    solutions1 = []
-    solutions2 = []
-    solutions3 = []
+    solutions: List[float] = []
+    solutions1: List[float] = []
+    solutions2: List[float] = []
+    solutions3: List[float] = []
 
     # run the random algorithm x number of times
     for i in range(iteration):
@@ -151,8 +152,7 @@ def boxplot_connections(iteration, which_regions = 'nl', start = 'random'):
     plt.savefig('output/boxplot_difference_greedyconn_nl.png')
     plt.show()
 
-def lineplot(which_regions = 'nl', start = 'random'):
-        # initialise list for viable solutions
+def lineplot(which_regions: str = 'nl', start: str = 'random') -> None:
 
     hill_random = climb_hill(True, 10000, 'connect_with')
     k_random = hill_random[1]
@@ -178,7 +178,7 @@ def lineplot(which_regions = 'nl', start = 'random'):
     plt.savefig('output/lineplot_difference_nl.png')
     plt.show()
 
-def run(algorithm, which_regions = 'nl', start = 'random'):
+def run(algorithm: str, which_regions: str = 'nl', start: str = 'random') -> Union[float, bool]:
     """run the random algorithm and return a objective function output
             or a bool, showing that it is not a viable output"""
 
@@ -192,7 +192,7 @@ def run(algorithm, which_regions = 'nl', start = 'random'):
         data_connections = 'data/case_data/ConnectiesHolland.csv'
 
     # initialise an empty list of trajectories
-    trains = []
+    trains: List[List[str]] = []
 
     # create a network
     n = Network(data_stations, data_connections)

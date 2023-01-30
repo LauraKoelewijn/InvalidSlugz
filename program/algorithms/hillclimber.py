@@ -1,11 +1,11 @@
-from .trajectory import Train
-from ..representation.network_graph import Network
+from .trajectory import Train # type: ignore
+from ..representation.network_graph import Network # type: ignore
 
 import copy
 import random
-from typing import List
- 
-def climb_hill(just_hillclimb, iter_or_condstop: int, algorithm, which_regions: str = 'nl', start: str  = 'random'):
+from typing import List, Tuple, Union
+
+def climb_hill(just_hillclimb: bool, iter_or_condstop: int, algorithm: str, which_regions: str = 'nl', start: str  = 'random') -> Tuple[Network, List[float]]:
     """Funtion that executes the hillclimber algorithm.
         It takes a network with al already produced solution,
             it randomly chooses a trajectory to delete
@@ -54,12 +54,12 @@ def climb_hill(just_hillclimb, iter_or_condstop: int, algorithm, which_regions: 
         network.add_trajectory(t)
         train_number += 1
 
-    # set starting colution to first best solution
+    # set starting solution to first best solution
     best_solution = network
     #print(f"starting at {best_solution.calc_k()} for {which_regions}")
 
     # make list of hillclimber outcomes
-    list_solutions = [best_solution.calc_k()]
+    list_solutions: List[float] = [best_solution.calc_k()]
 
     #for i in range(iterations):
     if just_hillclimb:
@@ -90,17 +90,20 @@ def climb_hill(just_hillclimb, iter_or_condstop: int, algorithm, which_regions: 
             # print(f'BEST NOW: {best_solution.calc_k()}')
             if check_stop >= iter_or_condstop:
                 go = False
-    
+
     # return k for best solution network
     return best_solution, list_solutions  
 
-def hill_step(best_solution: "Network", algorithm, which_regions, start):
+def hill_step(best_solution: Network, algorithm: str, which_regions: str = 'nl', start: str = 'random') -> Union[float, bool]:
     # copy the solution network
     network_copy = copy.deepcopy(best_solution)
 
     #choose random trajectory to change
-    rand_traj = random.choice(network_copy.trajectories)
-    stations = rand_traj.object_traj
+    if len(network_copy.trajectories) > 0:
+        rand_traj = random.choice(network_copy.trajectories)
+        stations = rand_traj.object_traj
+    else:
+        return False
 
     # unvisit all stations and connections in the chosen trajectory
     for connection in rand_traj.object_conns:
@@ -134,7 +137,7 @@ def hill_step(best_solution: "Network", algorithm, which_regions, start):
     else:
         return False
 
-def random_restart(iterations: int, stop_after: int, algorithm: str, which_regions: str = 'nl', start: str = 'random'):
+def random_restart(iterations: int, stop_after: int, algorithm: str, which_regions: str = 'nl', start: str = 'random') -> Tuple[Network, List[float]]:
     # save best solution out of all restarts
     # print(which_regions)
 
@@ -156,10 +159,11 @@ def random_restart(iterations: int, stop_after: int, algorithm: str, which_regio
 
         if new_sol.calc_k() > best_sol.calc_k():
             best_sol = new_sol
-            # print(best_sol.calc_k())
         
         list_hill = new[1]
-        long_list = long_list + list_hill.calc_k()
+        long_list = long_list + list_hill
+    
+    print(long_list)
 
     return best_sol, long_list
 
