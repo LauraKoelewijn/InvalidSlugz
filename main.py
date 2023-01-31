@@ -1,4 +1,4 @@
-from program.algorithm import run, write_to_csv
+from program.algorithm import write_to_csv
 from program.analysis_visualisation.visualisation import visualize
 from program.analysis_visualisation.background_map import make_map
 from program.analysis_visualisation.baseline import hist

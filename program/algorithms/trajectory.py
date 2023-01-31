@@ -36,27 +36,41 @@ class Train():
         Returns:
             first_station: a Station object.
         """
+        # add all the unvisited stations to a list
         available_stations: List['Station'] = []
         for station in self.stations.stations.values():
             if not station.visited:
                 available_stations.append(station)
 
+        # HEURISTIC: starting at stations with the least connections
         if start == 'min_con':
-            min_con: int = len(self.stations.stations.values())
+            # if there are any unvisited stations left
             if len(available_stations) > 0:
-                for choose_station in available_stations:
-                    con_count: int = len(choose_station.connect)
+                # set high value for starting value
+                min_con: int = len(self.stations.stations.values())
 
+                # loop through all stations
+                for choose_station in available_stations:
+                    # count how many connetcions the station has
+                    con_count: int = len(choose_station.connect)
+                    
+                    # keep track of station with the least connections
                     if con_count < min_con:
                         min_con = con_count
                         first_station: 'Station' = choose_station
+            # if all stations have been visited, select a random one
             else:
                 first_station = random.choice(list(self.stations.stations.values()))
 
+        # starting at a random (unvisited) station
         elif start == 'random':
-            try:
+            # if there are unvisited stations left
+            if len(available_stations) > 0:
+                # choose a random unvisited station
                 first_station = random.choice(available_stations)
-            except:
+            # if all stations are visited
+            else:
+                # choose a random station from all stations
                 first_station = random.choice(list(self.stations.stations.values()))
 
         # add first station to trajectory list and set as visited
@@ -310,16 +324,22 @@ class Train():
             connections (Connection): a connection object.
 
         """
+        # set max_time for the given region
         if self.which_region == 'nl':
             max_time: int = 180
         elif self.which_region == 'holland':
-            max_time = 120
+            max_time: int = 120
+        else:
+            raise ValueError("please enter a valid region ('nl' or 'holland')")
 
         # keep track of the total time of the trajectory
         time: float = connection.time
+
+        # if the new connection can be added whithin the given time, add it
         if self.time + time <= max_time:
             self.time = self.time + time
             self.add_station(connection)
+        # otherwise, set stop value to True
         else:
             self.stop = True
 
