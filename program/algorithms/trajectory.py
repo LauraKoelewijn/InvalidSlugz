@@ -1,8 +1,19 @@
-from ..representation.connection_node import Connection
+#   trajectory.py
+#
+#   Minor programmeren - Algoritmen en Heuristieken
+#   RailNL case
+#   Meike Klunder, Laura Koelewijn & Sacha Gijsbers
+#
+#   Implements the Train class that holds
+#       - the representation of a trajectory
+#       - the random, random with used connections, greedy_time and greedy_connections algorithms
 
+# import libraries and classes
+from ..representation.connection_node import Connection
 import random
 from typing import List, Optional, TYPE_CHECKING
 
+# import types for type checking
 if TYPE_CHECKING:
     from .station_node import Station # type: ignore
     from .connection_node import Connection # type: ignore
