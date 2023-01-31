@@ -20,9 +20,12 @@ from program.analysis_visualisation.boxplot import boxplot_eind, lineplot, boxpl
 # # make_map()
 # visualize(n, trains, 'nl')
 
-hill = climb_hill(True, 50, 'greedy_conn_max')
-hill_best = hill[0]
-print(hill_best.calc_k())
+# hill = climb_hill(True, 50, 'greedy_conn_max', 'holland')
+# hill_best = hill[0]
+# print(hill_best.calc_k())
+
+sol = random_restart(100, 50, 'connect_with')
+print(sol[0].calc_k())
 
 # random_restart(100, 50, 'greedy_conn', 'nl', 'min_con')
 # hist(1000)
