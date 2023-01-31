@@ -145,15 +145,22 @@ class Network():
                 unvis.append(station)
         return unvis
 
-    def add_trajectory(self, train: Train) -> None:
-        """ Adds a given trajectory to to the network.
+    def add_trajectory(self, train: Train, index: int = -1) -> None:
+        """ Adds a given trajectory to the network
+                at specific index, if given.
             Updates the trajectories list and the total minutes
 
         Args:
             train (Train): a train object to be added
+            index (int): at what place in the list to add the train. Defaults to -1.
         """
-        # append the trajectory to the list
-        self.trajectories.append(train)
+        # if there's nothing in the list of the default -1 is used as index
+        if len(self.trajectories) == 0 or index == -1:
+            # just append the train to the list
+            self.trajectories.append(train)
+        else:
+            # if a specific index is given, insert the train at that index
+            self.trajectories.insert(index, train)
 
         # add trajectory's monutes to the total minutes
         self.total_minutes += train.time 

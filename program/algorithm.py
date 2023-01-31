@@ -3,9 +3,14 @@ from .algorithms.trajectory import Train
 from .algorithms.hillclimber import climb_hill, random_restart
 import csv
 
-def write_to_csv(network):
+def write_to_csv(network: Network):
+    """ Function that writes the solution from the given network to a csv file
+
+    Args:
+        network (Network): a network with a solution
+    """
     # open a new csv file to write the solution in
-    with open('output/solution.csv', 'w', newline='') as csvfile:
+    with open('output/output.csv', 'w', newline='') as csvfile:
         writer = csv.writer(csvfile, delimiter = ',')
 
         # write the header

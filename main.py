@@ -15,17 +15,21 @@ from program.analysis_visualisation.boxplot import boxplot_eind, lineplot, boxpl
 # n = data_tuple[0]
 # trains = data_tuple[1]
 
-# # visualize the data
-# # if background map is needed plot it here
-# # make_map()
-# visualize(n, trains, 'nl')
+# visualize the data
+# if background map is needed plot it here
+# make_map()
+hill = climb_hill(True, 50, 'greedy_conn_max')
+hill_best = hill[0]
+write_to_csv(hill_best)
+visualize(hill_best, 'nl')
 
-# hill = climb_hill(True, 50, 'greedy_conn_max', 'holland')
+# hill = climb_hill(True, 50, 'greedy_conn_max')
 # hill_best = hill[0]
 # print(hill_best.calc_k())
+# write_to_csv(hill_best)
 
-sol = random_restart(100, 50, 'connect_with')
-print(sol[0].calc_k())
+# sol = random_restart(100, 50, 'connect_with')[0]
+# write_to_csv(sol)
 
 # random_restart(100, 50, 'greedy_conn', 'nl', 'min_con')
 # hist(1000)
