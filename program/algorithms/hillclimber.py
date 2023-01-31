@@ -99,11 +99,8 @@ def hill_step(best_solution: Network, algorithm: str, which_regions: str = 'nl',
     network_copy = copy.deepcopy(best_solution)
 
     #choose random trajectory to change
-    if len(network_copy.trajectories) > 0:
-        rand_traj = random.choice(network_copy.trajectories)
-        stations = rand_traj.object_traj
-    else:
-        return False
+    rand_traj = random.choice(network_copy.trajectories)
+    stations = rand_traj.object_traj
 
     # unvisit all stations and connections in the chosen trajectory
     for connection in rand_traj.object_conns:
@@ -129,6 +126,9 @@ def hill_step(best_solution: Network, algorithm: str, which_regions: str = 'nl',
         new_t.greedy_conns('min')
     elif algorithm == 'greedy_conn_max':
         new_t.greedy_conns('max')
+
+    # add the new trajectory to the solution
+    network_copy.add_trajectory(new_t)
 
     # keep best solution 
     if network_copy.calc_k() > best_solution.calc_k():
