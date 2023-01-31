@@ -5,7 +5,7 @@ from typing import List
 
 import matplotlib.transforms as mtrans # type: ignore
 
-def visualize(network, trains, which_region = 'holland') -> None:
+def visualize(network, which_region = 'holland') -> None:
 
     # check if wanted map is of holland of nl and change save option
     if which_region == 'nl':
@@ -54,17 +54,15 @@ def visualize(network, trains, which_region = 'holland') -> None:
 
     # PLOT TRAJECTORIES
     # loop through all the trajectories
-    
-    for i, traj in enumerate(trains):
+    for i, traj in enumerate(network.trajectories):
         # initiate empty lists for the coordinates
         x_traj: List[float] = []
         y_traj: List[float] = []
 
         # loop through the trajectory
-        for station_name in traj:
+        for station in traj.object_traj:
             # save coordinates of every station in the trajectory
-            station_node = network.stations[station_name]
-            station_coords = station_node.coord
+            station_coords = station.coord
             x_traj.append(station_coords[0])
             y_traj.append(station_coords[1])
         # plot the trajectory
