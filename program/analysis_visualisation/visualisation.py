@@ -66,7 +66,8 @@ def visualize(network, which_region = 'holland') -> None:
             x_traj.append(station_coords[0])
             y_traj.append(station_coords[1])
         # plot the trajectory
-        plt.plot(x_traj, y_traj, transform=mtrans.offset_copy(ax.transData, fig=fix, x=(i-3)*0.005, y=(i-3)*0.005))
+        #plt.plot(x_traj, y_traj, transform=mtrans.offset_copy(ax.transData, fig=fix, x=(i-3)*0.005, y=(i-3)*0.005))
+        plt.plot(x_traj, y_traj)
 
     # unzip the tuples and plot them
     x,y = zip(*coords)

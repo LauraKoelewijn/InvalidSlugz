@@ -182,7 +182,7 @@ def hill_step(start_network: Network, algorithm: str, which_regions: str = 'nl',
     return network_copy
 
 
-def random_restart(iterations: int, stop_after: int, algorithm: str, which_regions: str = 'nl', start: str = 'random') -> Tuple[Network, List[float]]:
+def random_restart(iterations: int, stop_after: int, algorithm: str, which_regions: str = 'nl', start: str = 'random', tell_me = False) -> Tuple[Network, List[float]]:
     """ Function that runs multiple hillclimbers after eachother 
             whith different starting conditions
             and returns the best solution out of all of them
@@ -216,7 +216,7 @@ def random_restart(iterations: int, stop_after: int, algorithm: str, which_regio
     # run the restart algorithm
     for i in range(iterations):
         # let user know how far they are
-        if i % 10 == 0:
+        if i % 10 == 0 and tell_me:
             print(f"iteration {i} / {iterations}")
 
         # run a hillclimber

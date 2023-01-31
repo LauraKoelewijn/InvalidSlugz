@@ -1,3 +1,4 @@
+# import functions
 from program.algorithm import write_to_csv
 from program.analysis_visualisation.visualisation import visualize
 from program.analysis_visualisation.background_map import make_map
@@ -5,37 +6,28 @@ from program.analysis_visualisation.baseline import hist
 from program.algorithms.hillclimber import climb_hill, random_restart
 from program.analysis_visualisation.boxplot import boxplot_eind, lineplot, boxplot_time, boxplot_connections
 
-# run()
-# create a network and run the algorithm
-# you can fill in 'nl' if you want to calculate trajectory for the whole netherlands
-# you can fill in 'min_con' if you want to start the trajectories at stations with minimal connections
-# data_tuple = run('nl')
+# COMMENT OUT THE PARTS YOU DON'T WANT TO RUN
 
-# # save data from the run
-# n = data_tuple[0]
-# trains = data_tuple[1]
+# --- experiments ---
 
-# visualize the data
-# if background map is needed plot it here
-# make_map()
-hill = climb_hill(True, 50, 'greedy_conn_max')
-hill_best = hill[0]
-write_to_csv(hill_best)
-visualize(hill_best, 'nl')
+# make a boxplot showing the greedy algorithm, which is
+#   greedy for the least or most amount of connections
+#   and showing either starting at a random station 
+#   or a station with the least amount of connections
+boxplot_connections(iteration = 1000)
 
-# hill = climb_hill(True, 50, 'greedy_conn_max')
-# hill_best = hill[0]
-# print(hill_best.calc_k())
-# write_to_csv(hill_best)
+# make a boxplot showing the greedy algorithm wich is
+#   greedy for the longest or shortest connection
+boxplot_time(iteration = 1000)
 
-# sol = random_restart(100, 50, 'connect_with')[0]
-# write_to_csv(sol)
+# make a boxplot which shows all the algorithms
+boxplot_eind(iteration = 100, which_regions='nl')
 
-# random_restart(100, 50, 'greedy_conn', 'nl', 'min_con')
-# hist(1000)
+# --- find and save a (the best we'll find) solution ---
+sol = random_restart(1000, 50, 'connect_with', tell_me = True)[0]
+write_to_csv(sol)
+visualize(sol, 'nl')
 
-# boxplot_eind(10)
-# lineplot()
 
-# boxplot_time(100)
-#boxplot_connections(1000)
+
+

@@ -21,20 +21,20 @@ def boxplot_eind(iteration: int, which_regions: str = 'nl', start: str = 'random
     for i in range(iteration):
 
         k_random = run('connect_with')
-        k_greedy_time = run('greedy_time')
-        k_greedy_conn = run('greedy_conn')
+        k_greedy_time = run('greedy_time_short')
+        k_greedy_conn = run('greedy_conn_max', start = 'min_con')
 
-        hill = climb_hill(False, 100, 'connect_with')
+        hill = climb_hill(False, 100, 'connect_with')[0]
         k_hill = hill.calc_k()
         
-        random = random_restart(100, 50, 'greedy_conn')
+        random = random_restart(100, 50, 'greedy_conn_min')[0]
         k_restart = random.calc_k()
 
-        print(f'rand {k_random}')
-        print(f'time {k_greedy_time}')
-        print(f'con {k_greedy_conn}')
-        print(f'hill {k_hill}')
-        print(f'restart {k_restart}')
+        # print(f'rand {k_random}')
+        # print(f'time {k_greedy_time}')
+        # print(f'con {k_greedy_conn}')
+        # print(f'hill {k_hill}')
+        # print(f'restart {k_restart}')
 
         # check if the output of the run is viable then append to initialised list
         if k_random != False:
@@ -181,7 +181,6 @@ def lineplot(which_regions: str = 'nl', start: str = 'random') -> None:
 def run(algorithm: str, which_regions: str = 'nl', start: str = 'random') -> Union[float, bool]:
     """run the random algorithm and return a objective function output
             or a bool, showing that it is not a viable output"""
-
     if which_regions == 'nl':
         traj_num = 20
         data_stations = 'data/case_data/StationsNationaal.csv'
@@ -209,7 +208,7 @@ def run(algorithm: str, which_regions: str = 'nl', start: str = 'random') -> Uni
         
         if algorithm == 'connect':
             t.connect()
-        elif algorithm == 'connect_with' or algorithm == 'hillclimber':
+        elif algorithm == 'connect_with':
             t.connect_with_used()
         elif algorithm == 'greedy_time_long':
             t.greedy_time('long')
@@ -223,24 +222,25 @@ def run(algorithm: str, which_regions: str = 'nl', start: str = 'random') -> Uni
         trains.append(t.trajectory)
         n.add_trajectory(t)
 
-        # calculate values for the objective function
-        p_counter += t.station_counter
-        min += t.time
-        train_number += 1
-        if t.time > max_min:
-            max_min = t.time
+        # #calculate values for the objective function
+        # p_counter += t.station_counter
+        # min += t.time
+        # train_number += 1
+        # if t.time > max_min:
+        #     max_min = t.time
 
     # check if the solution is valid (if all stations have been visited)
     if len(n.check_stations()) != 0:
         return False
 
-    # calculate parameters for objective function
-    total_connections = len(n.connections)
-    visited_connections = total_connections - len(n.check_connections())
-    p = visited_connections/total_connections
-    t = train_number - 1
+    # # calculate parameters for objective function
+    # total_connections = len(n.connections)
+    # visited_connections = total_connections - len(n.check_connections())
+    # p = visited_connections/total_connections
+    # t = train_number - 1
 
-    # calculate objective function and return its outcome
-    k = p*10000 - (t*100 + min)
+    #calculate objective function and return its outcome
+    #k = p*10000 - (t*100 + min)
+    k = n.calc_k()
     
     return k
