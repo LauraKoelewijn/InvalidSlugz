@@ -203,7 +203,7 @@ class Train():
                 # initiate empty list
                 unvis: List['Connection'] = []
                 # save best current connection which is None
-                best_conn = None
+                best_conn: Optional[int] = None
                 # loop through all possible connections
                 for conn in all_conns:
                     # get the next station of the connection
@@ -226,6 +226,13 @@ class Train():
                         if 0 < len(unvis) < min_unvis_len:
                             min_unvis_len = len(unvis)
                             best_conn = conn
+                        # if two stations have the same amount of unvisited
+                        # connections, make a random choice between the two
+                        elif 0 < len(unvis) == min_unvis_len:
+                            random_choice = random.choice([min_unvis_len, len(unvis)])
+                            if random_choice == len(unvis):
+                                min_unvis_len = len(unvis)
+                                best_conn = conn
 
                     # if parameter == 'max':
                     if amount == 'max':
@@ -234,6 +241,13 @@ class Train():
                         if 0 < len(unvis) > max_unvis_len:
                             max_unvis_len = len(unvis)
                             best_conn = conn
+                        # if two stations have the same amount of unvisited
+                        # connections, make a random choice between the two
+                        elif 0 < len(unvis) == max_unvis_len:
+                            random_choice = random.choice([max_unvis_len, len(unvis)])
+                            if random_choice == len(unvis):
+                                max_unvis_len = len(unvis)
+                                best_conn = conn
 
                 # if counter is 0, stop trajectory
                 if unvis_counter == 0:
@@ -248,7 +262,7 @@ class Train():
 
             else:
                 # current station is set as station with best amount of connections
-                best_con: Optional[int] = None
+                best_con = None
                 # empty list
                 equals: List['Connection'] = []
                 # loop through list with stations
