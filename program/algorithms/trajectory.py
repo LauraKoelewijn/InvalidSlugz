@@ -1,7 +1,12 @@
 from ..representation.connection_node import Connection
 
 import random
-from typing import List, Optional
+from typing import List, Optional, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from .station_node import Station # type: ignore
+    from .connection_node import Connection # type: ignore
+    from .network_graph import Network # type: ignore
 
 class Train():
     """A class representation of a trajectory.
