@@ -1,7 +1,7 @@
 from ..representation.connection_node import Connection
 
 import random
-from typing import List
+from typing import List, Optional
 
 class Train():
     """A class representation of a trajectory.
@@ -9,19 +9,19 @@ class Train():
     Can choose the first station of a trajectory and then connect it to
     a next station by using one of our four algorithm functions. Also keeps
     track of the time of a trajectory."""
-    def __init__(self, name: str, network: "Network", which_region: str = 'holland', start: str = 'random') -> None:
+    def __init__(self, name: str, network: 'Network', which_region: str = 'holland', start: str = 'random') -> None:
         self.which_region = which_region
         self.stations = network
         self.name = name
         self.trajectory: List[str] = []
-        self.object_traj: List["Station"] = []
-        self.object_conns: List["Connection"] = []
-        self.current_station: "Station" = self.choose_first_station(start)
+        self.object_traj: List['Station'] = []
+        self.object_conns: List['Connection'] = []
+        self.current_station: 'Station' = self.choose_first_station(start)
         self.stop: bool = False
         self.time: float = 0
         self.station_counter: int = 0
 
-    def choose_first_station(self, start: str) -> "Station":
+    def choose_first_station(self, start: str) -> 'Station':
         """Chooses the first station randomly from the list of
         unvisited connections.
 
@@ -31,7 +31,7 @@ class Train():
         Returns:
             first_station: a Station object.
         """
-        available_stations: List["Station"] = []
+        available_stations: List['Station'] = []
         for station in self.stations.stations.values():
             if not station.visited:
                 available_stations.append(station)
@@ -43,8 +43,8 @@ class Train():
                     con_count: int = len(choose_station.connect)
 
                     if con_count < min_con:
-                        min_con: int = con_count
-                        first_station: "Station" = choose_station
+                        min_con = con_count
+                        first_station: 'Station' = choose_station
             else:
                 first_station = random.choice(list(self.stations.stations.values()))
 
@@ -67,7 +67,7 @@ class Train():
         are visited."""
         while self.stop == False:
             # initiate empty list to put unvisited connection
-            choices: List["Connection"] = []
+            choices: List['Connection'] = []
             # loop though all connections
             for connection in self.current_station.connect:
                 # if the connection hasn't been visited before, add to the list
@@ -80,7 +80,7 @@ class Train():
                 self.stop = True
             else:
                 # choose next station randomly from the possible connections
-                next: "Connection" = random.choice(choices)
+                next: 'Connection' = random.choice(choices)
                 # if the connection has been visited before, remove from the list
                 self.check_time(next)
 
@@ -94,7 +94,7 @@ class Train():
         whether visited or not."""
         while self.stop == False:
             # initiate empty list to put unvisited connection
-            choices: List["Connection"] = []
+            choices: List['Connection'] = []
 
             # loop though all connections
             for connection in self.current_station.connect:
@@ -104,8 +104,8 @@ class Train():
             # if there are no unvisited connections available
             if len(choices) == 0:
                 # choose a random connection
-                all_conns: List["Connection"] = self.current_station.connect
-                next: "Connection" = random.choice(all_conns)
+                all_conns: List['Connection'] = self.current_station.connect
+                next: 'Connection' = random.choice(all_conns)
                 self.check_time(next)
             else:
                 # choose next station randomly from the possible connections
@@ -128,7 +128,7 @@ class Train():
         """
         while self.stop == False:
             # initiate empty list to put unvisited connections
-            choices: List["Connection"] = []
+            choices: List['Connection'] = []
 
             # loop though all connections
             for connection in self.current_station.connect:
@@ -139,8 +139,8 @@ class Train():
             # if there are no unvisited connections available
             if len(choices) == 0:
                 # choose a random connection
-                all_conns: List["Connection"] = self.current_station.connect
-                next: "Connection" = random.choice(all_conns)
+                all_conns: List['Connection'] = self.current_station.connect
+                next: 'Connection' = random.choice(all_conns)
                 self.check_time(next)
             else:
                 if time == 'short':
@@ -177,7 +177,7 @@ class Train():
         """
         while self.stop == False:
             # initiate empty list to put unvisited connections
-            choices: List["Connection"] = []
+            choices: List['Connection'] = []
 
             # loop though all connections
             for connection in self.current_station.connect:
@@ -188,7 +188,7 @@ class Train():
             # if there are no unvisited connections available
             if len(choices) == 0:
                 # get all connections of current station
-                all_conns: List["Connection"] = self.current_station.connect
+                all_conns: List['Connection'] = self.current_station.connect
                 # set default min length to length of all connections
                 min_unvis_len: int = len(self.stations.stations.values())
                 # set default max length to low number
@@ -196,15 +196,15 @@ class Train():
                 # set counter to check for unvisited connections
                 unvis_counter: int = 0
                 # initiate empty list
-                unvis: List = []
+                unvis: List['Connection'] = []
                 # save best current connection which is None
                 best_conn = None
                 # loop through all possible connections
                 for conn in all_conns:
                     # get the next station of the connection
-                    next: "Station" = conn.get_other_station(self.current_station)
+                    next: 'Station' = conn.get_other_station(self.current_station)
                     # get all connections of next station
-                    all_conns_next: List["Connection"] = next.connect
+                    all_conns_next: List['Connection'] = next.connect
 
                     # loop through conns of next station
                     for next_conn in all_conns_next:
@@ -243,9 +243,9 @@ class Train():
 
             else:
                 # current station is set as station with best amount of connections
-                best_con = None
+                best_con: Optional[int] = None
                 # empty list
-                equals: List["Connection"] = []
+                equals: List['Connection'] = []
                 # loop through list with stations
                 for connection in choices:
                     # get the station that is connected with each connection
@@ -281,7 +281,7 @@ class Train():
 
         self.current_station.visit()
 
-    def check_time(self, connection: "Connection") -> None:
+    def check_time(self, connection: 'Connection') -> None:
         """Checks if requested map is of North- and South-Holland or of the
         Netherlands. Changes the amount of minutes the train may ride
         accordingly.
@@ -294,7 +294,7 @@ class Train():
         if self.which_region == 'nl':
             max_time: int = 180
         elif self.which_region == 'holland':
-            max_time: int = 120
+            max_time = 120
 
         # keep track of the total time of the trajectory
         time: float = connection.time
@@ -304,7 +304,7 @@ class Train():
         else:
             self.stop = True
 
-    def add_station(self, connection: "Connection") -> None:
+    def add_station(self, connection: 'Connection') -> None:
         """Follows the chosen connection and adds the next
         station to the trajectory.
 
@@ -313,7 +313,7 @@ class Train():
 
         """
         # get the next station
-        other_station: "Station" = connection.get_other_station(self.current_station)
+        other_station: 'Station' = connection.get_other_station(self.current_station)
 
         # add the next station to the trajectory list
         self.trajectory.append(other_station.name)
