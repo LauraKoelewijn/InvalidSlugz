@@ -299,7 +299,6 @@ def boxplot_eind(iteration: int) -> None:
     """ Function that creates a boxplot that compares:
         - the baseline algorithm
         - the greedy for shortest time
-        - the greedy for most connections
         - the hillclimber
         - the random restart hillclimber
 
@@ -312,39 +311,34 @@ def boxplot_eind(iteration: int) -> None:
     solutions1: List[float] = []
     solutions2: List[float] = []
     solutions3: List[float] = []
-    solutions4: List[float] = []
 
     # run every algorithm the given number of times
     for i in range(iteration):
 
-        k_random = run('connect_with')
-        k_greedy_time = run('greedy_time_short')
-        k_greedy_conn = run('greedy_conn_max', start = 'min_con')
+        k_random = run('connect_with', 'nl', 'min_con')
+        k_greedy_conn = run('greedy_time_short', 'nl', 'min_con')
 
-        hill = climb_hill(False, 100, 'connect_with')[0]
-        k_hill = hill.calc_k()
+        hill = climb_hill(True, 100, 'greedy_time_short', 'nl', 'min_con')[0]
+        k_hill_greedy = hill.calc_k()
         
-        random = random_restart(100, 50, 'greedy_conn_min')[0]
-        k_restart = random.calc_k()
+        sol = random_restart(100, 100, 'greedy_time_short', 'nl', 'min_con', tell_me = True)[0]
+        k_restart = sol.calc_k()
 
         # check if the output of the run is viable then append to initialised list
         if k_random != False:
             solutions.append(k_random)
         
-        if k_greedy_time != False:
-            solutions1.append(k_greedy_time)
-        
         if k_greedy_conn != False:
-            solutions2.append(k_greedy_conn)
+            solutions1.append(k_greedy_conn)
         
-        if k_hill != False:
-            solutions3.append(k_hill)
+        if k_hill_greedy != False:
+            solutions2.append(k_hill_greedy)
         
         if k_restart != False:
-            solutions4.append(k_restart)
+            solutions3.append(k_restart)
 
     # make dataframe with all lists
-    data = [solutions, solutions1, solutions2, solutions3, solutions4]
+    data = [solutions, solutions1, solutions2, solutions3]
 
     # Creating plot
     plt.boxplot(data, showmeans=True)
@@ -353,7 +347,7 @@ def boxplot_eind(iteration: int) -> None:
     plt.title(f'Difference in objective function of Random, Greedy and Hillclimber algorithms, for {iteration} runs')
     plt.xlabel('Type algorithm')
     plt.ylabel('K values (objective function output)')
-    plt.xticks([1, 2, 3, 4, 5], [f'Random', f'Greedy Time', f'Greedy Connection', f'Hillclimber', f'Hillclimber Restart'])
+    plt.xticks([1, 2, 3, 4], [f'Random', f'Greedy Time\n(Short, min con)', f'Hillclimber Greedy Time\n(Short, min con)', f'Hillclimber Restart\nGreedy Time (Short, min con)'])
 
     # save and show the plot
     plt.savefig('output/boxplot_difference_nl.png')
