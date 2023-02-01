@@ -58,7 +58,7 @@ def hist(iteration: int, which_regions: str = 'holland', start: str = 'random') 
     plt.text(mean(solutions) * 1.01, max_ylim * 0.9, 'Mean: {:.2f}'.format(mean(solutions)))
 
     # save and show the histogram
-    plt.savefig('output/baseline_hist_no_bias.png')
+    plt.savefig('output/{which_regions}/Baseline/baseline_hist_no_bias.png')
     plt.show()
 
 def run(which_regions: str = 'holland', start: str = 'random') -> Union[float, bool]:
