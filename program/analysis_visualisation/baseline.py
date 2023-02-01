@@ -1,4 +1,4 @@
-#   algorithm.py
+#   baseline.py
 #
 #   Minor programmeren - Algoritmen en Heuristieken
 #   RailNL case
@@ -7,7 +7,7 @@
 #   Holds functions that create a histogram for our baseline using our
 #   random algorithm, and calculates the K-value and returns it if the solution
 #   is valid.
- 
+
 # import
 from ..representation.network_graph import Network # type: ignore
 from ..algorithms.trajectory import Train # type: ignore
