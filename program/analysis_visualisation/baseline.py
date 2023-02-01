@@ -16,7 +16,7 @@ from statistics import mean # type: ignore
 import matplotlib.pyplot as plt # type: ignore
 from typing import List, Union
 
-def hist(iteration: int, which_regions: str = 'holland', start: str = 'random') -> None:
+def hist(iteration: int, which_regions: str = 'nl', start: str = 'random') -> None:
     """Functions that creates a histogram of the baseline algorithm,
     showing only the viable outputs
 
@@ -58,10 +58,10 @@ def hist(iteration: int, which_regions: str = 'holland', start: str = 'random') 
     plt.text(mean(solutions) * 1.01, max_ylim * 0.9, 'Mean: {:.2f}'.format(mean(solutions)))
 
     # save and show the histogram
-    plt.savefig('output/baseline_hist_no_bias.png')
+    plt.savefig('output/NL/Baseline/baseline_hist_no_bias.png')
     plt.show()
 
-def run(which_regions: str = 'holland', start: str = 'random') -> Union[float, bool]:
+def run(which_regions: str = 'nl', start: str = 'random') -> Union[float, bool]:
     """Runs the random algorithm and return a objective function output
     or a bool, showing that it is not a viable output.
 

@@ -96,7 +96,7 @@ def climb_hill(just_hillclimb: bool, iter_or_condstop: int, algorithm: str, whic
 
             # if the new solution is better than the best now
             if outcome.calc_k() > best_solution.calc_k():
-                 # set the new one as the best
+                # set the new one as the best
                 best_solution = outcome
                 list_solutions.append(best_solution.calc_k())
             else:
@@ -198,7 +198,7 @@ def random_restart(iterations: int, stop_after: int, algorithm: str, which_regio
         Network: the network worth trhe best found solution
         List[float]: a list of all intermediate solutions' k-values
     """
- 
+
     # set region
     if which_regions == 'nl':
         data_stations = 'data/case_data/StationsNationaal.csv'
