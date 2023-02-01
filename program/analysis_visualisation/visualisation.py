@@ -60,7 +60,7 @@ def visualize(network: 'Network', which_region = 'holland') -> None:
             y_line = [station.coord[1], other.coord[1]]
 
             # plot connections between all stations
-            # plt.plot(x_line, y_line, color = 'grey', linestyle='--')
+            plt.plot(x_line, y_line, color = 'grey', linestyle='--')
 
     # hide axes
     ax = plt.gca()
@@ -81,8 +81,8 @@ def visualize(network: 'Network', which_region = 'holland') -> None:
             x_traj.append(station_coords[0])
             y_traj.append(station_coords[1])
         # plot the trajectory
-        #plt.plot(x_traj, y_traj, transform=mtrans.offset_copy(ax.transData, fig=fix, x=(i-3)*0.005, y=(i-3)*0.005))
-        plt.plot(x_traj, y_traj)
+        plt.plot(x_traj, y_traj, transform=mtrans.offset_copy(ax.transData, fig=fix, x=(i-3)*0.005, y=(i-3)*0.005))
+        # plt.plot(x_traj, y_traj)
 
     # unzip the tuples and plot them
     x,y = zip(*coords)
