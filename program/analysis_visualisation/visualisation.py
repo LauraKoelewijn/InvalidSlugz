@@ -43,6 +43,8 @@ def visualize(network: 'Network', which_region = 'holland') -> None:
     # set map as background plot of specific size
     ax.imshow(img, extent=[3.1, 7.4, 50.62, 53.73], aspect=1.7)
 
+    cols = ['red', 'midnightblue', 'orange', 'yellow', 'hotpink', 'limegreen', 'darkgreen', 'purple', 'darksalmon', 'steelblue', 'dodgerblue', 'maroon', 'blue', 'indigo', 'darkviolet', 'magenta', 'olivedrab', 'saddlebrown', 'white', 'lawngreen']
+
     # PLOT ALL CONNECTIONS
     # loop through all stations in the network_graph
     for station in stations:
@@ -81,7 +83,7 @@ def visualize(network: 'Network', which_region = 'holland') -> None:
             x_traj.append(station_coords[0])
             y_traj.append(station_coords[1])
         # plot the trajectory
-        plt.plot(x_traj, y_traj, transform=mtrans.offset_copy(ax.transData, fig=fix, x=(i-3)*0.005, y=(i-3)*0.005))
+        plt.plot(x_traj, y_traj, color=cols[i], transform=mtrans.offset_copy(ax.transData, fig=fix, x=(i-3)*0.008, y=(i-3)*0.008))
         # plt.plot(x_traj, y_traj)
 
     # unzip the tuples and plot them

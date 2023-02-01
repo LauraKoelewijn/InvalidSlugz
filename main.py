@@ -42,10 +42,10 @@ boxplot_restart(iteration = 1000)
 # # make a boxplot which shows all the algorithms
 # boxplot_eind(iteration = 100)
 
-# # --- find and save a (the best we'll find) solution ---
-# sol = random_restart(10, 50, 'connect_with', tell_me = True)[0]
-# write_to_csv(sol)
-# visualize(sol, 'nl')
+# --- find and save a (the best we'll find) solution ---
+sol = random_restart(10, 50, 'connect_with', tell_me = True)[0]
+#write_to_csv(sol)
+visualize(sol, 'nl')
 
 
 
