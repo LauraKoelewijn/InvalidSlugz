@@ -1,3 +1,14 @@
+#   baseline.py
+#
+#   Minor programmeren - Algoritmen en Heuristieken
+#   RailNL case
+#   Meike Klunder, Laura Koelewijn & Sacha Gijsbers
+#
+#   Holds functions that create a histogram for our baseline using our
+#   random algorithm, and calculates the K-value and returns it if the solution
+#   is valid.
+
+# import
 from ..representation.network_graph import Network # type: ignore
 from ..algorithms.trajectory import Train # type: ignore
 from statistics import mean # type: ignore
@@ -6,8 +17,14 @@ import matplotlib.pyplot as plt # type: ignore
 from typing import List, Union
 
 def hist(iteration: int, which_regions: str = 'holland', start: str = 'random') -> None:
-    """Create a histogram of the baseline algorithm,
-        showing only the viable outputs"""
+    """Functions that creates a histogram of the baseline algorithm,
+    showing only the viable outputs
+
+    Args:
+        iteration (int): how many times you want to run the program
+        which_regions (str): 'holland' or 'nl' depending on which region you want
+        start (str): random or min_con
+    """
 
     # initialise list for viable solutions
     solutions: List[float] = []
@@ -45,8 +62,18 @@ def hist(iteration: int, which_regions: str = 'holland', start: str = 'random') 
     plt.show()
 
 def run(which_regions: str = 'holland', start: str = 'random') -> Union[float, bool]:
-    """run the random algorithm and return a objective function output
-            or a bool, showing that it is not a viable output"""
+    """Runs the random algorithm and return a objective function output
+    or a bool, showing that it is not a viable output.
+
+    Args:
+        which_regions (str): 'holland' or 'nl' depending on which region you want
+        start (str): random or min_con
+
+
+    Returns:
+        k, or False (Union[float, bool]): returns the K-value if the solution
+        is valid, else returns False.
+    """
 
     if which_regions == 'nl':
         traj_num = 20
