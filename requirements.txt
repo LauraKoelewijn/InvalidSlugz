@@ -1,0 +1,4 @@
+contextily==1.2.0
+geojson==2.5.0
+geopandas==0.12.2
+matplotlib==3.6.2
