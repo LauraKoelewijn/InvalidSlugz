@@ -1,4 +1,4 @@
-#   algorithm.py
+#   write_solution.py
 #
 #   Minor programmeren - Algoritmen en Heuristieken
 #   RailNL case
