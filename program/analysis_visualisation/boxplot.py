@@ -388,6 +388,20 @@ def lineplot() -> None:
     plt.savefig('output/lineplot_difference_nl.png')
     plt.show()
 
+def line_random_restart(iters: int, stop_after: int):
+    """ Function that makes a lineplot of one run of the random restart algorithm 
+    """
+    # run the random restart
+    random = random_restart(iters, stop_after, 'greedy_conn_min', tell_me=True)[1]
+
+    # plot the k-value for every iteration in the random restart
+    plt.plot(random)
+    plt.xlabel('iteraties')
+    plt.ylabel('k-waarde')
+    plt.savefig('output/nl/Lineplot/lineplot_random_restart_once.png')
+    plt.show()
+    
+
 def run(algorithm: str, which_regions: str = 'nl', start: str = 'random') -> Union[float, bool]:
     """ Function that runs the given algorithm
         and retunrs the k-value for the end result if all stations have been visited 

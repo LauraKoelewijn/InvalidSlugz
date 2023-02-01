@@ -24,9 +24,9 @@ def visualize(network: 'Network', which_region = 'holland') -> None:
     """
     # check if wanted map is of holland of nl and change save option
     if which_region == 'nl':
-        save_plot = 'output/nl_plot_con.png'
+        save_plot = 'output/nl/visualisations/nl_plot_con.png'
     elif which_region == 'holland':
-        save_plot = 'output/holland_plot_con.png'
+        save_plot = 'output/holland/holland_plot_con.png'
 
     # intialize empty list of coordinates for plotting
     coords: List[List[float]] = []

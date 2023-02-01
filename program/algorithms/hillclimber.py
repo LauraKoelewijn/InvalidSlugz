@@ -23,6 +23,7 @@ from ..representation.network_graph import Network # type: ignore
 import copy
 import random
 from typing import List, Tuple, Union
+import time
 
 def climb_hill(just_hillclimb: bool, iter_or_condstop: int, algorithm: str, which_regions: str = 'nl', start: str  = 'random') -> Tuple[Network, List[float]]:
     """Funtion that executes the hillclimber algorithm.
@@ -211,13 +212,21 @@ def random_restart(iterations: int, stop_after: int, algorithm: str, which_regio
     best_sol = Network(data_stations, data_connections)
 
     # initiate empty list for intermediate k-values
-    long_list: List[float] = []
+    #long_list: List[float] = []
 
     # run the restart algorithm
-    for i in range(iterations):
+    # for i in range(iterations):
+    go = True
+    iters = 0
+    while go:
+        now = time.time()
+        # if (time.localtime(now)[4]) % 5 == 0:
+        #     print("still going...")
+        if time.localtime(now)[3] == 8:
+            go = False
         # let user know how far they are
-        if i % 10 == 0 and tell_me:
-            print(f"iteration {i} / {iterations}")
+        # if i % 10 == 0 and tell_me:
+        #     print(f"iteration {i} / {iterations}")
 
         # run a hillclimber
         new = climb_hill(False, stop_after, algorithm, which_regions, start)
@@ -229,11 +238,12 @@ def random_restart(iterations: int, stop_after: int, algorithm: str, which_regio
             best_sol = new_sol
         
         # add hillclimbers' k-values to the list
-        list_hill = new[1]
-        long_list = long_list + list_hill
+        #list_hill = new[1]
+        #long_list = long_list + list_hill
+        iters += 1
 
     # return the best solution and the intermediate k-values
-    return best_sol, long_list
+    return best_sol, iters
 
 
 

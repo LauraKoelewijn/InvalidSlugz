@@ -4,7 +4,7 @@ from program.analysis_visualisation.visualisation import visualize
 from program.analysis_visualisation.background_map import make_map
 from program.analysis_visualisation.baseline import hist
 from program.algorithms.hillclimber import climb_hill, random_restart
-from program.analysis_visualisation.boxplot import boxplot_start, boxplot_greedy, boxplot_restart, boxplot_hill, boxplot_eind, lineplot, boxplot_time, boxplot_connections
+from program.analysis_visualisation.boxplot import boxplot_start, boxplot_greedy, boxplot_restart, boxplot_hill, boxplot_eind, lineplot, boxplot_time, boxplot_connections, line_random_restart
 
 # COMMENT OUT THE PARTS YOU DON'T WANT TO RUN
 
@@ -37,15 +37,19 @@ from program.analysis_visualisation.boxplot import boxplot_start, boxplot_greedy
 
 # make a boxplot showing the greedy algorithm wich is
 #   random, hillclimber for greedy time and random restart
-boxplot_restart(iteration = 1000)
+#boxplot_restart(iteration = 1)
 
 # # make a boxplot which shows all the algorithms
 # boxplot_eind(iteration = 100)
 
 # --- find and save a (the best we'll find) solution ---
-# sol = random_restart(10, 50, 'connect_with', tell_me = True)[0]
-# #write_to_csv(sol)
-# visualize(sol, 'nl')
+output = random_restart(10, 100, 'connect_with', tell_me = True)
+sol = output[0]
+total_iters = output[1]
+print(total_iters)
+write_to_csv(sol)
+visualize(sol, 'nl')
+
 
 
 
