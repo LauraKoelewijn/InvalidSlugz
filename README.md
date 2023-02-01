@@ -1,4 +1,4 @@
-# RailNL
+# RailNL :train: 
 
 Er moet een lijnvoering gemaakt worden voor de intercitytreinen in Nederland. Dit moet binnen drie uur gebeuren met maximaal twintig trajecten. Het doel is om een lijnvoering te bedenken met zo min mogelijk treinen en een zo kort mogelijke duur die over zo veel mogelijk connecties rijdt.
 
@@ -41,7 +41,7 @@ Het is mogelijk om in main.py verschillende stukken code uit te "commenten". Bov
 
 
 ## Auteurs
-Wij zijn de Invalud Slugz :snail:
+Wij zijn de Invalid Slugz :snail:
 - Sacha Gijsbers
 - Laura Koelewijn
 - Meike Klunder
